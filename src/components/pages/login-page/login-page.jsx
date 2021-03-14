@@ -1,7 +1,25 @@
-import React from "react";
+import React, {useRef} from "react";
+import {useHistory} from "react-router-dom";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {login} from "src/store/api-actions";
 import Header from "src/components/layout/header/header";
 
-const LoginPage = () => {
+const LoginPage = ({onSubmit}) => {
+  const loginRef = useRef();
+  const passwordRef = useRef();
+
+  const history = useHistory();
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    onSubmit({
+      login: loginRef.current.value,
+      password: passwordRef.current.value,
+    });
+  };
+
   return (
     <div className="page page--gray page--login">
       <Header />
@@ -9,10 +27,16 @@ const LoginPage = () => {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
+            <form
+              className="login__form form"
+              action="#"
+              method="post"
+              onSubmit={handleSubmit}
+            >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
+                  ref={loginRef}
                   className="login__input form__input"
                   type="email"
                   name="email"
@@ -23,6 +47,7 @@ const LoginPage = () => {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
                 <input
+                  ref={passwordRef}
                   className="login__input form__input"
                   type="password"
                   name="password"
@@ -31,6 +56,7 @@ const LoginPage = () => {
                 />
               </div>
               <button
+                onClick={() => history.push(`/`)}
                 className="login__submit form__submit button"
                 type="submit"
               >
@@ -51,4 +77,16 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+LoginPage.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
+
+
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit(authData) {
+    dispatch(login(authData));
+  }
+});
+
+export {LoginPage};
+export default connect(null, mapDispatchToProps)(LoginPage);
