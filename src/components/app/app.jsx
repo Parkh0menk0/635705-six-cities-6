@@ -6,22 +6,22 @@ import FavoritesPage from "../pages/favorites-page/favorites-page";
 import LoginPage from "../pages/login-page/login-page";
 import OfferPage from "../pages/offer-page/offer-page";
 import NotFoundPage from "../pages/not-found-page/not-found-page";
-
+import {AppRoute} from "src/const";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact>
+        <Route path={AppRoute.MAIN} exact>
           <MainPage />
         </Route>
-        <Route path="/login" exact>
+        <Route path={AppRoute.LOGIN} exact>
           <LoginPage />
         </Route>
-        <Route path="/favorites" exact>
+        <Route path={AppRoute.FAVORITES} exact>
           <FavoritesPage />
         </Route>
-        <Route path="/offer/:id" exact>
+        <Route path={AppRoute.ROOM} exact>
           <OfferPage />
         </Route>
         <Route>

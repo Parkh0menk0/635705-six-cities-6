@@ -92,3 +92,10 @@ export const mapTypes = {
   MAIN: `MAIN`,
   PROPERTY: `PROPERTY`,
 };
+
+export const AppRoute = {
+  MAIN: `/`,
+  LOGIN: `/login`,
+  FAVORITES: `/favorites`,
+  ROOM: `/offer/:id`,
+};
