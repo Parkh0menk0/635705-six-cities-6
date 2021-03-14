@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {Switch, Route, Router as BrowserRouter} from "react-router-dom";
+import browserHistory from "src/browser-history";
 import MainPage from "../pages/main-page/main-page";
 import FavoritesPage from "../pages/favorites-page/favorites-page";
 import LoginPage from "../pages/login-page/login-page";
@@ -11,7 +12,7 @@ import PrivateRoute from "../private-route/private-route";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route path={AppRoute.MAIN} exact>
           <MainPage />
