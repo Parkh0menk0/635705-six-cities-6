@@ -7,6 +7,7 @@ import LoginPage from "../pages/login-page/login-page";
 import OfferPage from "../pages/offer-page/offer-page";
 import NotFoundPage from "../pages/not-found-page/not-found-page";
 import {AppRoute} from "src/const";
+import PrivateRoute from "../private-route/private-route";
 
 const App = () => {
   return (
@@ -18,9 +19,11 @@ const App = () => {
         <Route path={AppRoute.LOGIN} exact>
           <LoginPage />
         </Route>
-        <Route path={AppRoute.FAVORITES} exact>
-          <FavoritesPage />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.FAVORITES}
+          render={() => <FavoritesPage />}
+        ></PrivateRoute>
         <Route path={AppRoute.ROOM} exact>
           <OfferPage />
         </Route>
@@ -34,7 +37,7 @@ const App = () => {
 
 App.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.object),
-  reviews: PropTypes.arrayOf(PropTypes.object)
+  reviews: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default App;
