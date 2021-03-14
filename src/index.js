@@ -11,11 +11,13 @@ import {CITIES, SORT_LIST} from "./const";
 import {ActionCreator} from "./store/action";
 import {checkAuth} from "./store/api-actions";
 import {createAPI, AuthorizationStatus} from "./api";
+import {redirect} from "src/store/middlewares/redirect";
 
 const initialState = {
   city: CITIES[0],
 
   authorizationStatus: AuthorizationStatus.NO_AUTH,
+  authorizationInfo: {},
 
   sortOption: SORT_LIST[0],
   activeOfferId: null,
@@ -23,8 +25,8 @@ const initialState = {
   offers: {
     data: null,
     loading: false,
-    error: null
-  }
+    error: null,
+  },
 };
 
 const api = createAPI(() =>
@@ -37,15 +39,16 @@ const store = createStore(
     reducer,
     initialState,
     composeWithDevTools(
-        applyMiddleware(thunk.withExtraArgument(api))
+        applyMiddleware(thunk.withExtraArgument(api)),
+        applyMiddleware(redirect)
     )
 );
 
-store.dispatch(checkAuth());
-
-ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.querySelector(`#root`)
-);
+store.dispatch(checkAuth()).then(() => {
+  ReactDOM.render(
+      <Provider store={store}>
+        <App />
+      </Provider>,
+      document.querySelector(`#root`)
+  );
+});
