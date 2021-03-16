@@ -100,7 +100,7 @@ export const AppRoute = {
   ROOM: `/offer/:id`,
 };
 
-export const APIRoute = {
+export const APIRoutes = {
   OFFERS: `/hotels`,
   OFFER: `/hotels/:id`,
   OFFERS_NEARBY: `/hotels/:hotel_id/nearby`,
