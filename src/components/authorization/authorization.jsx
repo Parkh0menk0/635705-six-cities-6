@@ -21,13 +21,13 @@ const Authorization = ({authorizationStatus, authorizationInfo}) => {
         {authorizationInfo.email}
       </span>
     );
-  } else {
-    return (
-      <span onClick={handelPushLoginPage} className="header__login">
-        Sign in
-      </span>
-    );
   }
+
+  return (
+    <span onClick={handelPushLoginPage} className="header__login">
+      Sign in
+    </span>
+  );
 };
 
 Authorization.propTypes = {
