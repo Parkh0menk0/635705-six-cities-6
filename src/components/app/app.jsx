@@ -20,11 +20,9 @@ const App = () => {
         <Route path={AppRoute.LOGIN} exact>
           <LoginPage />
         </Route>
-        <PrivateRoute
-          exact
-          path={AppRoute.FAVORITES}
-          render={() => <FavoritesPage />}
-        ></PrivateRoute>
+        <PrivateRoute path={AppRoute.FAVORITES} exact>
+          <FavoritesPage />
+        </PrivateRoute>
         <Route path={AppRoute.ROOM} exact>
           <OfferPage />
         </Route>
