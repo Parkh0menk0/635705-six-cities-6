@@ -13,38 +13,38 @@ import {checkAuth} from "./store/api-actions";
 import {createAPI, AuthorizationStatus} from "./api";
 import {redirect} from "src/store/middlewares/redirect";
 
-const initialState = {
+const preloadedState = {
   city: CITIES[0],
-
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
-  authorizationInfo: {},
-
   sortOption: SORT_LIST[0],
   activeOfferId: null,
-
   offers: {
     data: null,
     loading: false,
     error: null,
   },
+  authorization: {
+    status: AuthorizationStatus.NO_AUTH,
+    error: null, // maybe
+    data: {},
+  },
 };
 
 const api = createAPI(() =>
   store.dispatch(
-      ActionCreator.requiredAuthorization(AuthorizationStatus.NO_AUTH)
+      ActionCreator.authorizationFailured(AuthorizationStatus.NO_AUTH)
   )
 );
 
 const store = createStore(
     reducer,
-    initialState,
+    preloadedState,
     composeWithDevTools(
         applyMiddleware(thunk.withExtraArgument(api)),
         applyMiddleware(redirect)
     )
 );
 
-store.dispatch(checkAuth()).then(() => {
+store.dispatch(checkAuth()).then(() => { // @TODO: разобраться почему?
   ReactDOM.render(
       <Provider store={store}>
         <App />

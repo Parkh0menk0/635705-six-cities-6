@@ -4,7 +4,8 @@ import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 import {AuthorizationStatus} from "src/api";
 
-const Authorization = ({authorizationStatus, authorizationInfo}) => {
+const Authorization = ({authorization}) => {
+  const {status, data} = authorization;
   const history = useHistory();
 
   const handelPushLoginPage = (evt) => {
@@ -12,13 +13,13 @@ const Authorization = ({authorizationStatus, authorizationInfo}) => {
     history.push(`/login`);
   };
 
-  if (authorizationStatus === AuthorizationStatus.AUTH) {
+  if (status === AuthorizationStatus.AUTH) {
     return (
       <span
         onClick={handelPushLoginPage}
         className="header__user-name user__name"
       >
-        {authorizationInfo.email}
+        {data.email}
       </span>
     );
   }
@@ -31,16 +32,18 @@ const Authorization = ({authorizationStatus, authorizationInfo}) => {
 };
 
 Authorization.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  authorizationInfo: PropTypes.shape({
-    email: PropTypes.string,
-    password: PropTypes.string,
+  authorization: PropTypes.shape({
+    status: PropTypes.string,
+    error: PropTypes.string,
+    data: PropTypes.shape({
+      email: PropTypes.string,
+      password: PropTypes.string,
+    }),
   }),
 };
 
 const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  authorizationInfo: state.authorizationInfo,
+  authorization: state.authorization,
 });
 
 export {Authorization};

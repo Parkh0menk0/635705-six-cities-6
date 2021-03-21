@@ -1,9 +1,9 @@
 import {ActionType} from "./action";
 import {SORT_LIST} from "src/const";
+import {AuthorizationStatus} from "src/api";
 
 const reducer = (state, action) => {
   switch (action.type) {
-
     case ActionType.SET_CITY:
       return {
         ...state,
@@ -58,16 +58,24 @@ const reducer = (state, action) => {
       // auth_success
       // auth_failured
 
-    case ActionType.REQUIRED_AUTHORIZATION:
+    case ActionType.AUTHORIZATION_SUCCESS:
       return {
         ...state,
-        authorizationStatus: action.payload,
+        authorization: {
+          status: AuthorizationStatus.AUTH,
+          error: null,
+          data: action.payload,
+        },
       };
 
-    case ActionType.AUTHORIZATION_INFO:
+    case ActionType.AUTHORIZATION_FAILURED:
       return {
         ...state,
-        authorizationInfo: action.payload,
+        authorization: {
+          status: AuthorizationStatus.NO_AUTH,
+          error: action.payload,
+          data: {},
+        },
       };
 
     default:

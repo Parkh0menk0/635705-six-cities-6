@@ -5,9 +5,9 @@ export const ActionType = {
   OFFERS_REQUEST: `offers/request`,
   OFFERS_SUCCESS: `offers/success`,
   OFFERS_FAILURE: `offers/failure`,
-  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   REDIRECT_TO_ROUTE: `/redirectToRoute`,
-  AUTHORIZATION_INFO: `user/login`,
+  AUTHORIZATION_SUCCESS: `user/login`,
+  AUTHORIZATION_FAILURED: `user/authorizationFailured`,
 };
 
 const OfferActionCreator = {
@@ -37,17 +37,17 @@ export const ActionCreator = {
     type: ActionType.HOVER_OFFER,
     payload: id
   }),
-  requiredAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    payload: status
-  }),
   redirectToRoute: (url) => ({
     type: ActionType.REDIRECT_TO_ROUTE,
     payload: url
   }),
-  authorizationInfo: (info) => ({
-    type: ActionType.AUTHORIZATION_INFO,
+  authorizationSuccess: (info) => ({
+    type: ActionType.AUTHORIZATION_SUCCESS,
     payload: info
+  }),
+  authorizationFailured: (error) => ({
+    type: ActionType.AUTHORIZATION_FAILURED,
+    payload: error
   }),
   ...OfferActionCreator,
 };

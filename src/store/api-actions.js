@@ -1,10 +1,8 @@
 import {ActionCreator} from "./action";
-import {AuthorizationStatus} from "src/api";
 import {APIRoutes} from "src/const";
 
-export const fetchOffersList = () => (dispatch, _getState, api) =>{
+export const fetchOffersList = () => (dispatch, _getState, api) => {
   dispatch(ActionCreator.requestOffers());
-
   api
     .get(APIRoutes.OFFERS)
     .then(({data}) => dispatch(ActionCreator.loadOffersSuccess(data)))
@@ -14,11 +12,7 @@ export const fetchOffersList = () => (dispatch, _getState, api) =>{
 export const checkAuth = () => (dispatch, _getState, api) =>
   api
     .get(APIRoutes.LOGIN)
-    .then(({data}) => dispatch(ActionCreator.authorizationInfo(data)))
-    .then(() =>
-      dispatch(ActionCreator.requiredAuthorization(AuthorizationStatus.AUTH))
-    )
-    .catch(() => {});
+    .then(({data}) => dispatch(ActionCreator.authorizationSuccess(data)));
 
 export const login = ({login: email, password}) => (
     dispatch,
@@ -27,8 +21,8 @@ export const login = ({login: email, password}) => (
 ) =>
   api
     .post(APIRoutes.LOGIN, {email, password})
-    .then(({data}) => dispatch(ActionCreator.authorizationInfo(data)))
-    .then(() =>
-      dispatch(ActionCreator.requiredAuthorization(AuthorizationStatus.AUTH))
-    )
-    .then(() => dispatch(ActionCreator.redirectToRoute(`/`)));
+    .then(({data}) => dispatch(ActionCreator.authorizationSuccess(data)))
+    .then(() => dispatch(ActionCreator.redirectToRoute(`/`)))
+    .catch(() => {
+      dispatch(ActionCreator.authorizationFailured(`bad login`));
+    });

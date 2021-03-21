@@ -5,13 +5,14 @@ import {connect} from "react-redux";
 import {AppRoute} from "src/const";
 import {AuthorizationStatus} from "src/api";
 
-const PrivateRoute = ({render, path, exact, authorizationStatus}) => {
+const PrivateRoute = ({render, path, exact, authorization}) => {
+  const {status} = authorization;
   return (
     <Route
       path={path}
       exact={exact}
       render={(routeProps) => {
-        return authorizationStatus === AuthorizationStatus.AUTH
+        return status === AuthorizationStatus.AUTH
           ? render(routeProps)
           : <Redirect to={AppRoute.LOGIN} />;
       }}
@@ -20,14 +21,21 @@ const PrivateRoute = ({render, path, exact, authorizationStatus}) => {
 };
 
 PrivateRoute.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
+  authorization: PropTypes.shape({
+    status: PropTypes.string,
+    error: PropTypes.string,
+    data: PropTypes.shape({
+      email: PropTypes.string,
+      password: PropTypes.string,
+    }),
+  }),
   exact: PropTypes.bool.isRequired,
   path: PropTypes.string.isRequired,
   render: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
+  authorization: state.authorization,
 });
 
 export {PrivateRoute};
