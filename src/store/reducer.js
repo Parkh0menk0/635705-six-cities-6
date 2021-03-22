@@ -1,6 +1,6 @@
 import {ActionType} from "./action";
 import {SORT_LIST} from "src/const";
-
+import {AuthorizationStatus} from "src/api";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -10,11 +10,13 @@ const reducer = (state, action) => {
         city: action.payload,
         sortOption: SORT_LIST[0],
       };
+
     case ActionType.SET_SORT_OPTION:
       return {
         ...state,
         sortOption: action.payload,
       };
+
     case ActionType.HOVER_OFFER:
       return {
         ...state,
@@ -28,7 +30,7 @@ const reducer = (state, action) => {
           data: null,
           loading: true,
           error: null,
-        }
+        },
       };
 
     case ActionType.OFFERS_SUCCESS:
@@ -38,7 +40,7 @@ const reducer = (state, action) => {
           data: action.payload,
           loading: false,
           error: null,
-        }
+        },
       };
 
     case ActionType.OFFERS_FAILURE:
@@ -48,18 +50,25 @@ const reducer = (state, action) => {
           data: null,
           loading: false,
           error: action.payload,
-        }
+        },
       };
 
-      // auth_noAsk
-      // auth_request
-      // auth_success
-      // auth_failured
-
-    case ActionType.REQUIRED_AUTHORIZATION:
+    case ActionType.AUTHORIZATION_SUCCESS:
       return {
         ...state,
-        authorizationStatus: action.payload,
+        user: {
+          status: AuthorizationStatus.AUTH,
+          data: action.payload,
+        },
+      };
+
+    case ActionType.AUTHORIZATION_FAILURED:
+      return {
+        ...state,
+        user: {
+          status: AuthorizationStatus.NO_AUTH,
+          data: null,
+        },
       };
 
     default:

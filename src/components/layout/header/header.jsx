@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import Authorization from "src/components/authorization/authorization";
 
 const Header = () => {
   return (
@@ -25,7 +26,7 @@ const Header = () => {
                   href="#"
                 >
                   <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                  <span className="header__login">Sign in</span>
+                  <Authorization />
                 </a>
               </li>
             </ul>

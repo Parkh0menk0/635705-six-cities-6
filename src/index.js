@@ -11,41 +11,43 @@ import {CITIES, SORT_LIST} from "./const";
 import {ActionCreator} from "./store/action";
 import {checkAuth} from "./store/api-actions";
 import {createAPI, AuthorizationStatus} from "./api";
+import {redirect} from "src/store/middlewares/redirect";
 
-const initialState = {
+const preloadedState = {
   city: CITIES[0],
-
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
-
   sortOption: SORT_LIST[0],
   activeOfferId: null,
-
   offers: {
     data: null,
     loading: false,
-    error: null
-  }
+    error: null,
+  },
+  user: {
+    status: AuthorizationStatus.NO_AUTH,
+    data: null,
+  },
 };
 
 const api = createAPI(() =>
   store.dispatch(
-      ActionCreator.requiredAuthorization(AuthorizationStatus.NO_AUTH)
+      ActionCreator.authorizationFailured()
   )
 );
 
 const store = createStore(
     reducer,
-    initialState,
+    preloadedState,
     composeWithDevTools(
-        applyMiddleware(thunk.withExtraArgument(api))
+        applyMiddleware(thunk.withExtraArgument(api)),
+        applyMiddleware(redirect)
     )
 );
 
-store.dispatch(checkAuth());
-
-ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.querySelector(`#root`)
-);
+store.dispatch(checkAuth()).then(() => { // @TODO: разобраться почему? Для проверки авторизации и возможности перехода на страницу favorites
+  ReactDOM.render(
+      <Provider store={store}>
+        <App />
+      </Provider>,
+      document.querySelector(`#root`)
+  );
+});

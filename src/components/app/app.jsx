@@ -1,27 +1,29 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
-import MainPage from "../pages/main-page/main-page";
-import FavoritesPage from "../pages/favorites-page/favorites-page";
-import LoginPage from "../pages/login-page/login-page";
-import OfferPage from "../pages/offer-page/offer-page";
-import NotFoundPage from "../pages/not-found-page/not-found-page";
-
+import {Switch, Route, Router as BrowserRouter} from "react-router-dom";
+import browserHistory from "src/browser-history";
+import MainPage from "src/components/pages/main-page/main-page";
+import FavoritesPage from "src/components/pages/favorites-page/favorites-page";
+import LoginPage from "src/components/pages/login-page/login-page";
+import OfferPage from "src/components/pages/offer-page/offer-page";
+import NotFoundPage from "src/components/pages/not-found-page/not-found-page";
+import {AppRoute} from "src/const";
+import PrivateRoute from "src/components/private-route/private-route";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route path="/" exact>
+        <Route path={AppRoute.MAIN} exact>
           <MainPage />
         </Route>
-        <Route path="/login" exact>
+        <Route path={AppRoute.LOGIN} exact>
           <LoginPage />
         </Route>
-        <Route path="/favorites" exact>
+        <PrivateRoute path={AppRoute.FAVORITES} exact>
           <FavoritesPage />
-        </Route>
-        <Route path="/offer/:id" exact>
+        </PrivateRoute>
+        <Route path={AppRoute.ROOM} exact>
           <OfferPage />
         </Route>
         <Route>
@@ -34,7 +36,7 @@ const App = () => {
 
 App.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.object),
-  reviews: PropTypes.arrayOf(PropTypes.object)
+  reviews: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default App;
