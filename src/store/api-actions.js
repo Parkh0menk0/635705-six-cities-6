@@ -12,7 +12,8 @@ export const fetchOffersList = () => (dispatch, _getState, api) => {
 export const checkAuth = () => (dispatch, _getState, api) =>
   api
     .get(APIRoutes.LOGIN)
-    .then(({data}) => dispatch(ActionCreator.authorizationSuccess(data)));
+    .then(({data}) => dispatch(ActionCreator.authorizationSuccess(data)))
+    .catch(() => dispatch(ActionCreator.authorizationFailured()));
 
 export const login = ({login: email, password}) => (
     dispatch,
@@ -23,6 +24,4 @@ export const login = ({login: email, password}) => (
     .post(APIRoutes.LOGIN, {email, password})
     .then(({data}) => dispatch(ActionCreator.authorizationSuccess(data)))
     .then(() => dispatch(ActionCreator.redirectToRoute(`/`)))
-    .catch(() => {
-      dispatch(ActionCreator.authorizationFailured(`bad login`));
-    });
+    .catch(() => dispatch(ActionCreator.authorizationFailured()));

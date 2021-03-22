@@ -4,8 +4,8 @@ import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 import {AuthorizationStatus} from "src/api";
 
-const Authorization = ({authorization}) => {
-  const {status, data} = authorization;
+const Authorization = ({user}) => {
+  const {status, data} = user;
   const history = useHistory();
 
   const handelPushLoginPage = (evt) => {
@@ -32,9 +32,8 @@ const Authorization = ({authorization}) => {
 };
 
 Authorization.propTypes = {
-  authorization: PropTypes.shape({
+  user: PropTypes.shape({
     status: PropTypes.string,
-    error: PropTypes.string,
     data: PropTypes.shape({
       email: PropTypes.string,
       password: PropTypes.string,
@@ -43,7 +42,7 @@ Authorization.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  authorization: state.authorization,
+  user: state.user,
 });
 
 export {Authorization};

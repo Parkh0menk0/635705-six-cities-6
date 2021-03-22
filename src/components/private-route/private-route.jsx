@@ -5,8 +5,8 @@ import {connect} from "react-redux";
 import {AppRoute} from "src/const";
 import {AuthorizationStatus} from "src/api";
 
-const PrivateRoute = ({render, path, exact, authorization}) => {
-  const {status} = authorization;
+const PrivateRoute = ({render, path, exact, user}) => {
+  const {status} = user;
   return (
     <Route
       path={path}
@@ -21,9 +21,8 @@ const PrivateRoute = ({render, path, exact, authorization}) => {
 };
 
 PrivateRoute.propTypes = {
-  authorization: PropTypes.shape({
+  user: PropTypes.shape({
     status: PropTypes.string,
-    error: PropTypes.string,
     data: PropTypes.shape({
       email: PropTypes.string,
       password: PropTypes.string,
@@ -35,7 +34,7 @@ PrivateRoute.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  authorization: state.authorization,
+  user: state.user,
 });
 
 export {PrivateRoute};

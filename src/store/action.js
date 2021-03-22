@@ -6,8 +6,8 @@ export const ActionType = {
   OFFERS_SUCCESS: `offers/success`,
   OFFERS_FAILURE: `offers/failure`,
   REDIRECT_TO_ROUTE: `/redirectToRoute`,
-  AUTHORIZATION_SUCCESS: `user/login`,
-  AUTHORIZATION_FAILURED: `user/authorizationFailured`,
+  AUTHORIZATION_SUCCESS: `auth/success`,
+  AUTHORIZATION_FAILURED: `auth/failured`,
 };
 
 const OfferActionCreator = {
@@ -45,9 +45,8 @@ export const ActionCreator = {
     type: ActionType.AUTHORIZATION_SUCCESS,
     payload: info
   }),
-  authorizationFailured: (error) => ({
+  authorizationFailured: () => ({
     type: ActionType.AUTHORIZATION_FAILURED,
-    payload: error
   }),
   ...OfferActionCreator,
 };

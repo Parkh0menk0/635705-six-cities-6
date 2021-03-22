@@ -53,17 +53,11 @@ const reducer = (state, action) => {
         },
       };
 
-      // auth_noAsk
-      // auth_request
-      // auth_success
-      // auth_failured
-
     case ActionType.AUTHORIZATION_SUCCESS:
       return {
         ...state,
-        authorization: {
+        user: {
           status: AuthorizationStatus.AUTH,
-          error: null,
           data: action.payload,
         },
       };
@@ -71,10 +65,9 @@ const reducer = (state, action) => {
     case ActionType.AUTHORIZATION_FAILURED:
       return {
         ...state,
-        authorization: {
+        user: {
           status: AuthorizationStatus.NO_AUTH,
-          error: action.payload,
-          data: {},
+          data: null,
         },
       };
 

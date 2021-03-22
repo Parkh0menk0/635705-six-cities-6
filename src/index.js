@@ -22,16 +22,15 @@ const preloadedState = {
     loading: false,
     error: null,
   },
-  authorization: {
+  user: {
     status: AuthorizationStatus.NO_AUTH,
-    error: null, // maybe
-    data: {},
+    data: null,
   },
 };
 
 const api = createAPI(() =>
   store.dispatch(
-      ActionCreator.authorizationFailured(AuthorizationStatus.NO_AUTH)
+      ActionCreator.authorizationFailured()
   )
 );
 
@@ -44,7 +43,7 @@ const store = createStore(
     )
 );
 
-store.dispatch(checkAuth()).then(() => { // @TODO: разобраться почему?
+store.dispatch(checkAuth()).then(() => { // @TODO: разобраться почему? Для проверки авторизации и возможности перехода на страницу favorites
   ReactDOM.render(
       <Provider store={store}>
         <App />
