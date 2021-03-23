@@ -1,5 +1,6 @@
 import {ActionCreator} from "./action";
 import {APIRoutes, AppRoute} from "src/const";
+import {notExisteOffer} from "src/api";
 
 export const fetchOffersList = () => (dispatch, _getState, api) => {
   dispatch(ActionCreator.requestOffers());
@@ -14,15 +15,9 @@ export const fetchOffer = (id) => (dispatch, _getState, api) =>
     .get(`/hotels/` + id)
     .then(({data}) => dispatch(ActionCreator.loadOffer(data)))
     .catch((err) => {
-      const {response} = err;
-      switch (response.status) {
-        case 404:
-          dispatch(ActionCreator.redirectToRoute(AppRoute.NOT_FOUND));
-          break;
-
-        default:
-          throw err;
-      }
+      notExisteOffer(err, () =>
+        dispatch(ActionCreator.redirectToRoute(AppRoute.NOT_FOUND))
+      );
     });
 
 export const fetchNearOffers = (id) => (dispatch, _getState, api) =>
@@ -47,7 +42,8 @@ export const submitComment = (id, {review: comment, rating}) => (
 ) =>
   api
     .post(`${APIRoutes.REVIEWS}/${id}`, {comment, rating})
-    .then(({data}) => dispatch(ActionCreator.laodReviews(data)));
+    .then(({data}) => dispatch(ActionCreator.laodReviews(data)))
+    .catch(() => {});
 
 export const checkAuth = () => (dispatch, _getState, api) =>
   api
