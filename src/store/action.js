@@ -8,6 +8,10 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: `/redirectToRoute`,
   AUTHORIZATION_SUCCESS: `auth/success`,
   AUTHORIZATION_FAILURED: `auth/failured`,
+  LOAD_OFFER: `data/loadOffer`,
+  LOAD_NEAR_OFFERS: `data/loadNearOffers`,
+  LOAD_REVIEWS: `data/laodReviews`,
+  LOAD_FAVORITE: `data/loadFavorite`,
 };
 
 const OfferActionCreator = {
@@ -21,6 +25,22 @@ const OfferActionCreator = {
   loadOffersFailure: (error) => ({
     type: ActionType.OFFERS_FAILURE,
     payload: error
+  }),
+  loadOffer: (offer) => ({
+    type: ActionType.LOAD_OFFER,
+    payload: offer
+  }),
+  loadNearOffers: (offers) => ({
+    type: ActionType.LOAD_NEAR_OFFERS,
+    payload: offers
+  }),
+  laodReviews: (reviews) => ({
+    type: ActionType.LOAD_REVIEWS,
+    payload: reviews
+  }),
+  loadFavorite: (offers) => ({
+    type: ActionType.LOAD_FAVORITE,
+    payload: offers
   }),
 };
 

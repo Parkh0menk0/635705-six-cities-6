@@ -26,6 +26,10 @@ const preloadedState = {
     status: AuthorizationStatus.NO_AUTH,
     data: null,
   },
+  openedOffer: {},
+  nearOffers: [],
+  reviews: [],
+  favoriteOffers: [],
 };
 
 const api = createAPI(() =>
@@ -43,7 +47,7 @@ const store = createStore(
     )
 );
 
-store.dispatch(checkAuth()).then(() => { // @TODO: разобраться почему? Для проверки авторизации и возможности перехода на страницу favorites
+store.dispatch(checkAuth()).then(() => {
   ReactDOM.render(
       <Provider store={store}>
         <App />

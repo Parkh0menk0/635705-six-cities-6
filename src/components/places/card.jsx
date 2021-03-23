@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import {Link} from "react-router-dom";
-import {Housing, ImageSize} from "src/const";
+import {Housing, ImageSize, AppRoute} from "src/const";
 import {MAX_RATING} from "src/const";
 
 const PlaceCard = ({pageType, offer, handleMouseEnter, handleMouseOut}) => {
@@ -18,6 +18,7 @@ const PlaceCard = ({pageType, offer, handleMouseEnter, handleMouseOut}) => {
   } = offer;
 
   const shouldBeMarked = pageType === `main` && isPremium;
+  const getOfferPath = (id) => AppRoute.ROOM.replace(/id/, id);
 
   return (
     <article
@@ -74,7 +75,7 @@ const PlaceCard = ({pageType, offer, handleMouseEnter, handleMouseOut}) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/:${offer.id}`}>{title}</Link>
+          <Link to={getOfferPath(offer.id)}>{title}</Link>
         </h2>
         <p className="place-card__type">{Housing[type]}</p>
       </div>

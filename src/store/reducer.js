@@ -71,6 +71,30 @@ const reducer = (state, action) => {
         },
       };
 
+    case ActionType.LOAD_OFFER:
+      return {
+        ...state,
+        openedOffer: action.payload,
+      };
+
+    case ActionType.LOAD_NEAR_OFFERS:
+      return {
+        ...state,
+        nearOffers: action.payload,
+      };
+
+    case ActionType.LOAD_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+
+    case ActionType.LOAD_FAVORITE:
+      return {
+        ...state,
+        favoriteOffers: action.payload,
+      };
+
     default:
       return state;
   }

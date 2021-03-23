@@ -9,13 +9,16 @@ import OfferPropertyGallery from "src/components/offer/offer-gallery";
 import PlacesList from "src/components/places/places";
 import {Housing} from "src/const";
 import {MAX_RATING} from "src/const";
+import {submitComment} from "src/store/api-actions";
 
 const OFFERS_RENTAL_LIMIT = 3;
 
-const OfferPage = ({offers, reviews}) => {
+const OfferPage = ({offers, reviews, openedOffer, submitCommentOnServer}) => {
   const {id} = useParams();
   const offer = offers.find((item) => `:${item.id}` === id);
-  const firstOffers = offers.filter((location) => location.city.name === offer.city.name).slice(0, OFFERS_RENTAL_LIMIT);
+  const firstOffers = offers
+    .filter((location) => location.city.name === offer.city.name)
+    .slice(0, OFFERS_RENTAL_LIMIT);
 
   const {
     is_premium: isPremium,
@@ -126,7 +129,10 @@ const OfferPage = ({offers, reviews}) => {
                   <span className="reviews__amount">{reviews.length}</span>
                 </h2>
                 <ReviewsList reviews={reviews} />
-                <ReviewsForm />
+                <ReviewsForm
+                  openedOffer={openedOffer}
+                  submitCommentOnServer={submitCommentOnServer}
+                />
               </section>
             </div>
           </div>
@@ -149,12 +155,45 @@ const OfferPage = ({offers, reviews}) => {
 OfferPage.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.object),
   reviews: PropTypes.arrayOf(PropTypes.object),
+  openedOffer: PropTypes.shape({
+    "bedrooms": PropTypes.number,
+    "city": PropTypes.shape({
+      "location": PropTypes.objectOf(PropTypes.number),
+      "name": PropTypes.string
+    }),
+    "description": PropTypes.string,
+    "goods": PropTypes.arrayOf(PropTypes.string),
+    "host": PropTypes.shape({
+      "avatar_url": PropTypes.string,
+      "id": PropTypes.number.isRequired,
+      "is_pro": PropTypes.bool,
+      "name": PropTypes.string
+    }),
+    "id": PropTypes.number.isRequired,
+    "images": PropTypes.arrayOf(PropTypes.string),
+    "is_favorite": PropTypes.bool,
+    "is_premium": PropTypes.bool,
+    "location": PropTypes.objectOf(PropTypes.number),
+    "max_adults": PropTypes.number,
+    "preview_image": PropTypes.string,
+    "price": PropTypes.number,
+    "rating": PropTypes.number,
+    "title": PropTypes.string,
+    "type": PropTypes.string
+  }),
+  submitCommentOnServer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   offers: state.offers,
   reviews: state.reviews,
+  openedOffer: state.openedOffer,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  submitCommentOnServer(id, review) {
+    dispatch(submitComment(id, review));
+  }
+});
 
-export default connect(mapStateToProps)(OfferPage);
+export default connect(mapStateToProps, mapDispatchToProps)(OfferPage);
