@@ -19,64 +19,60 @@ const FavoritesPage = ({favoriteOffers, changeCity, loadFavoriteOffers}) => {
   }, [favoriteOffers]);
 
   if (favoriteOffers.loading) {
-    return (
-      <LoadingScreen />
-    );
+    return <LoadingScreen />;
   }
 
-  const cityList = [...new Set(favoriteOffers.map((offer) => offer.city.name))];
+  const cityList = [...new Set(favoriteOffers.data.map((offer) => offer.city.name))];
 
   const cardClickHandler = (city) => {
     changeCity(city);
   };
 
   return (
-    <React.Fragment>
-      {favoriteOffers.length ? (
-        <div className="page">
-          <Header />
-          <main className="page__main page__main--favorites">
-            <div className="page__favorites-container container">
-              <section className="favorites">
-                <h1 className="favorites__title">Saved listing</h1>
-                <ul className="favorites__list">
-                  {cityList.map((city, i) => (
-                    <li
-                      key={city + i}
-                      className="favorites__locations-items"
-                      onClick={() => cardClickHandler(city)}
-                    >
-                      <div className="favorites__locations locations locations--current">
-                        <div className="locations__item">
-                          <Link
-                            to={AppRoute.MAIN}
-                            className="locations__item-link"
-                          >
-                            <span>{city}</span>
-                          </Link>
-                        </div>
+    favoriteOffers.data.length && (
+      <div className="page">
+        <Header />
+        <main className="page__main page__main--favorites">
+          <div className="page__favorites-container container">
+            <section className="favorites">
+              <h1 className="favorites__title">Saved listing</h1>
+              <ul className="favorites__list">
+                {cityList.map((city, i) => (
+                  <li
+                    key={city + i}
+                    className="favorites__locations-items"
+                    onClick={() => cardClickHandler(city)}
+                  >
+                    <div className="favorites__locations locations locations--current">
+                      <div className="locations__item">
+                        <Link
+                          to={AppRoute.MAIN}
+                          className="locations__item-link"
+                        >
+                          <span>{city}</span>
+                        </Link>
                       </div>
-                      <PlacesList
-                        pageType="favorites"
-                        offers={favoriteOffers.filter((offer) => offer.city.name === city)}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            </div>
-          </main>
-          <Footer />
-        </div>
-      ) : (
-        ``
-      )}
-    </React.Fragment>
+                    </div>
+                    <PlacesList
+                      pageType="favorites"
+                      offers={favoriteOffers.data.filter(
+                          (offer) => offer.city.name === city
+                      )}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    )
   );
 };
 
 FavoritesPage.propTypes = {
-  favoriteOffers: PropTypes.arrayOf(PropTypes.object),
+  favoriteOffers: PropTypes.object,
   changeCity: PropTypes.func.isRequired,
   loadFavoriteOffers: PropTypes.func.isRequired,
 };
