@@ -77,10 +77,34 @@ const reducer = (state, action) => {
         openedOffer: action.payload,
       };
 
-    case ActionType.LOAD_NEAR_OFFERS:
+    case ActionType.NEAR_OFFERS_SUCCESS:
       return {
         ...state,
-        nearOffers: action.payload,
+        nearOffers: {
+          data: action.payload,
+          loading: false,
+          error: null,
+        },
+      };
+
+    case ActionType.NEAR_OFFERS_REQUEST:
+      return {
+        ...state,
+        nearOffers: {
+          data: null,
+          loading: true,
+          error: null,
+        },
+      };
+
+    case ActionType.NEAR_OFFERS_FAILURE:
+      return {
+        ...state,
+        nearOffers: {
+          data: null,
+          loading: false,
+          error: action.payload,
+        },
       };
 
     case ActionType.LOAD_REVIEWS:

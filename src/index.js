@@ -27,7 +27,11 @@ const preloadedState = {
     data: null,
   },
   openedOffer: {},
-  nearOffers: [],
+  nearOffers: {
+    data: null,
+    loading: false,
+    error: null,
+  },
   reviews: [],
   favoriteOffers: {
     data: null,

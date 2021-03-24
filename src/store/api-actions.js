@@ -23,7 +23,8 @@ export const fetchOffer = (id) => (dispatch, _getState, api) =>
 export const fetchNearOffers = (id) => (dispatch, _getState, api) =>
   api
     .get(`/hotels/${id}/nearby`)
-    .then(({data}) => dispatch(ActionCreator.loadNearOffers(data)));
+    .then(({data}) => dispatch(ActionCreator.loadNearOffersSuccess(data)))
+    .catch((e) => dispatch(ActionCreator.loadNearOffersFailure(e)));
 
 export const fetchReviews = (id) => (dispatch, _getState, api) =>
   api

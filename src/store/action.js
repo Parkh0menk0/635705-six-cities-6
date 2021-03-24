@@ -9,11 +9,13 @@ export const ActionType = {
   AUTHORIZATION_SUCCESS: `auth/success`,
   AUTHORIZATION_FAILURED: `auth/failured`,
   LOAD_OFFER: `data/loadOffer`,
-  LOAD_NEAR_OFFERS: `data/loadNearOffers`,
   LOAD_REVIEWS: `data/laodReviews`,
   FAVORITE_OFFERS_REQUEST: `favoriteOffers/request`,
   FAVORITE_OFFERS_SUCCESS: `favoriteOffers/success`,
   FAVORITE_OFFERS_FAILURE: `favoriteOffers/failure`,
+  NEAR_OFFERS_REQUEST: `nearOffers/request`,
+  NEAR_OFFERS_SUCCESS: `nearOffers/success`,
+  NEAR_OFFERS_FAILURE: `nearOffers/failure`,
 };
 
 const OfferActionCreator = {
@@ -32,9 +34,16 @@ const OfferActionCreator = {
     type: ActionType.LOAD_OFFER,
     payload: offer
   }),
-  loadNearOffers: (offers) => ({
-    type: ActionType.LOAD_NEAR_OFFERS,
+  requestNearOffers: () => ({
+    type: ActionType.NEAR_OFFERS_REQUEST,
+  }),
+  loadNearOffersSuccess: (offers) => ({
+    type: ActionType.NEAR_OFFERS_SUCCESS,
     payload: offers
+  }),
+  loadNearOffersFailure: (error) => ({
+    type: ActionType.NEAR_OFFERS_FAILURE,
+    payload: error
   }),
   laodReviews: (reviews) => ({
     type: ActionType.LOAD_REVIEWS,

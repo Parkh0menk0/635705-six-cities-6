@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import {useRouteMatch} from "react-router-dom";
 import {connect} from "react-redux";
@@ -27,19 +27,21 @@ const OfferPage = ({
   status,
   loadOffer,
   nearOffers,
-  loadNearOffers,
+  loadNearOffersSuccess,
   loadReviews,
 }) => {
   const match = useRouteMatch();
   const pathId = match.params.id.slice(1);
 
-  if (String(openedOffer.id) !== pathId) {
-    loadNearOffers(pathId);
-    loadReviews(pathId);
-    loadOffer(pathId);
+  useEffect(() => {
+    if (String(openedOffer.id) !== pathId) {
+      loadNearOffersSuccess(pathId);
+      loadReviews(pathId);
+      loadOffer(pathId);
 
-    return <LoadingScreen />;
-  }
+      // return <LoadingScreen />;
+    }
+  }, [openedOffer.id]);
 
   const {
     is_premium: isPremium,
@@ -179,20 +181,20 @@ const OfferPage = ({
             </div>
           </div>
           <section className="property__map map">
-            {/* {nearOffers ? (
-              <Map offers={nearOffers} city={city} />
+            {/* {nearOffers.data ? (
+              <Map offers={nearOffers.data} city={city} />
             ) : (
               <LoadingScreen />
             )} */}
           </section>
         </section>
-        {nearOffers ? (
+        {nearOffers.data ? (
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">
                 Other places in the neighbourhood
               </h2>
-              <PlacesList pageType="offer" offers={nearOffers} />
+              <PlacesList pageType="offer" offers={nearOffers.data} />
             </section>
           </div>
         ) : (
@@ -233,9 +235,9 @@ OfferPage.propTypes = {
     "type": PropTypes.string
   }),
   submitCommentOnServer: PropTypes.func.isRequired,
-  nearOffers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  nearOffers: PropTypes.object.isRequired,
   loadOffer: PropTypes.func.isRequired,
-  loadNearOffers: PropTypes.func.isRequired,
+  loadNearOffersSuccess: PropTypes.func.isRequired,
   loadReviews: PropTypes.func.isRequired,
 };
 
@@ -253,7 +255,7 @@ const mapDispatchToProps = (dispatch) => ({
   loadOffer(id) {
     dispatch(fetchOffer(id));
   },
-  loadNearOffers(id) {
+  loadNearOffersSuccess(id) {
     dispatch(fetchNearOffers(id));
   },
   loadReviews(id) {
