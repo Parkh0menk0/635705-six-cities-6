@@ -29,7 +29,11 @@ const preloadedState = {
   openedOffer: {},
   nearOffers: [],
   reviews: [],
-  favoriteOffers: [],
+  favoriteOffers: {
+    data: null,
+    loading: false,
+    error: null,
+  },
 };
 
 const api = createAPI(() =>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {fetchFavoriteOffers} from "src/store/api-actions";
@@ -12,9 +12,16 @@ import {AppRoute} from "src/const";
 
 const FavoritesPage = ({favoriteOffers, changeCity, loadFavoriteOffers}) => {
 
-  if (!favoriteOffers) {
-    loadFavoriteOffers();
-    return <LoadingScreen />;
+  useEffect(() => {
+    if (!favoriteOffers.data) {
+      loadFavoriteOffers();
+    }
+  }, [favoriteOffers]);
+
+  if (favoriteOffers.loading) {
+    return (
+      <LoadingScreen />
+    );
   }
 
   const cityList = [...new Set(favoriteOffers.map((offer) => offer.city.name))];

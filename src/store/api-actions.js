@@ -30,10 +30,13 @@ export const fetchReviews = (id) => (dispatch, _getState, api) =>
     .get(`comments/${id}`)
     .then(({data}) => dispatch(ActionCreator.laodReviews(data)));
 
-export const fetchFavoriteOffers = () => (dispatch, _getState, api) =>
+export const fetchFavoriteOffers = () => (dispatch, _getState, api) => {
+  dispatch(ActionCreator.requestFavoriteOffers());
   api
     .get(APIRoutes.FAVORITES)
-    .then(({data}) => dispatch(ActionCreator.loadFavorite(data)));
+    .then(({data}) => dispatch(ActionCreator.loadFavoriteOffersSuccess(data)))
+    .catch((e) => dispatch(ActionCreator.loadFavoriteOffersFailure(e)));
+};
 
 export const submitComment = (id, {review: comment, rating}) => (
     dispatch,

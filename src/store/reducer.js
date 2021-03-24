@@ -89,10 +89,34 @@ const reducer = (state, action) => {
         reviews: action.payload,
       };
 
-    case ActionType.LOAD_FAVORITE:
+    case ActionType.FAVORITE_OFFERS_SUCCESS:
       return {
         ...state,
-        favoriteOffers: action.payload,
+        favoriteOffers: {
+          data: action.payload,
+          loading: false,
+          error: null,
+        },
+      };
+
+    case ActionType.FAVORITE_OFFERS_REQUEST:
+      return {
+        ...state,
+        favoriteOffers: {
+          data: null,
+          loading: true,
+          error: null,
+        },
+      };
+
+    case ActionType.FAVORITE_OFFERS_FAILURE:
+      return {
+        ...state,
+        favoriteOffers: {
+          data: null,
+          loading: false,
+          error: action.payload,
+        },
       };
 
     default:

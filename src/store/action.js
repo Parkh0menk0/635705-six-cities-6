@@ -11,7 +11,9 @@ export const ActionType = {
   LOAD_OFFER: `data/loadOffer`,
   LOAD_NEAR_OFFERS: `data/loadNearOffers`,
   LOAD_REVIEWS: `data/laodReviews`,
-  LOAD_FAVORITE: `data/loadFavorite`,
+  FAVORITE_OFFERS_REQUEST: `favoriteOffers/request`,
+  FAVORITE_OFFERS_SUCCESS: `favoriteOffers/success`,
+  FAVORITE_OFFERS_FAILURE: `favoriteOffers/failure`,
 };
 
 const OfferActionCreator = {
@@ -38,9 +40,16 @@ const OfferActionCreator = {
     type: ActionType.LOAD_REVIEWS,
     payload: reviews
   }),
-  loadFavorite: (offers) => ({
-    type: ActionType.LOAD_FAVORITE,
+  requestFavoriteOffers: () => ({
+    type: ActionType.FAVORITE_OFFERS_REQUEST,
+  }),
+  loadFavoriteOffersSuccess: (offers) => ({
+    type: ActionType.FAVORITE_OFFERS_SUCCESS,
     payload: offers
+  }),
+  loadFavoriteOffersFailure: (error) => ({
+    type: ActionType.FAVORITE_OFFERS_FAILURE,
+    payload: error
   }),
 };
 
