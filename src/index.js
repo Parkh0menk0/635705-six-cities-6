@@ -26,7 +26,7 @@ const preloadedState = {
     status: AuthorizationStatus.NO_AUTH,
     data: null,
   },
-  openedOffer: {},
+  openedOffer: null,
   nearOffers: {
     data: null,
     loading: false,
