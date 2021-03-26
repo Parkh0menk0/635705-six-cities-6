@@ -32,7 +32,7 @@ const preloadedState = {
     loading: false,
     error: null,
   },
-  reviews: [],
+  reviews: null,
   favoriteOffers: {
     data: null,
     loading: false,
