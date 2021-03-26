@@ -31,10 +31,10 @@ const OfferPage = ({
   loadReviews,
 }) => {
   const match = useRouteMatch();
-  const pathId = match.params.id.slice(1);
+  const pathId = parseInt(match.params.id.slice(1));
 
   useEffect(() => {
-    if (String(openedOffer.id) !== pathId) {
+    if (openedOffer.id !== pathId) {
       loadNearOffersSuccess(pathId);
       loadReviews(pathId);
       loadOffer(pathId);
