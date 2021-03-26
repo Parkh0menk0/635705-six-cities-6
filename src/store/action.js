@@ -9,7 +9,9 @@ export const ActionType = {
   AUTHORIZATION_SUCCESS: `auth/success`,
   AUTHORIZATION_FAILURED: `auth/failured`,
   LOAD_OFFER: `data/loadOffer`,
-  LOAD_REVIEWS: `data/laodReviews`,
+  REVIEWS_REQUEST: `reviews/request`,
+  REVIEWS_SUCCESS: `reviews/success`,
+  REVIEWS_FAILURE: `reviews/failure`,
   FAVORITE_OFFERS_REQUEST: `favoriteOffers/request`,
   FAVORITE_OFFERS_SUCCESS: `favoriteOffers/success`,
   FAVORITE_OFFERS_FAILURE: `favoriteOffers/failure`,
@@ -45,10 +47,6 @@ const OfferActionCreator = {
     type: ActionType.NEAR_OFFERS_FAILURE,
     payload: error
   }),
-  laodReviews: (reviews) => ({
-    type: ActionType.LOAD_REVIEWS,
-    payload: reviews
-  }),
   requestFavoriteOffers: () => ({
     type: ActionType.FAVORITE_OFFERS_REQUEST,
   }),
@@ -58,6 +56,20 @@ const OfferActionCreator = {
   }),
   loadFavoriteOffersFailure: (error) => ({
     type: ActionType.FAVORITE_OFFERS_FAILURE,
+    payload: error
+  }),
+};
+
+const ReviewActionCreator = {
+  laodReviewsSuccess: (reviews) => ({
+    type: ActionType.REVIEWS_SUCCESS,
+    payload: reviews
+  }),
+  requestReviews: () => ({
+    type: ActionType.REVIEWS_REQUEST,
+  }),
+  loadReviewsFailure: (error) => ({
+    type: ActionType.REVIEWS_FAILURE,
     payload: error
   }),
 };
@@ -87,4 +99,5 @@ export const ActionCreator = {
     type: ActionType.AUTHORIZATION_FAILURED,
   }),
   ...OfferActionCreator,
+  ...ReviewActionCreator,
 };

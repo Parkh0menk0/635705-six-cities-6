@@ -31,7 +31,7 @@ const OfferPage = ({
   loadReviews,
 }) => {
   const match = useRouteMatch();
-  const pathId = parseInt(match.params.id.slice(1));
+  const pathId = parseInt(match.params.id.slice(1), 10);
 
   useEffect(() => {
     if (openedOffer.id !== pathId) {
@@ -163,10 +163,10 @@ const OfferPage = ({
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">
                   Reviews ·{` `}
-                  <span className="reviews__amount">{reviews.length}</span>
+                  <span className="reviews__amount">{reviews.data.length}</span>
                 </h2>
-                {reviews ? (
-                  <ReviewsList reviews={reviews} />
+                {reviews.data ? (
+                  <ReviewsList reviews={reviews.data} />
                 ) : (
                   <LoadingScreen />
                 )}
@@ -207,7 +207,7 @@ const OfferPage = ({
 
 OfferPage.propTypes = {
   status: PropTypes.string.isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.object),
+  reviews: PropTypes.object,
   openedOffer: PropTypes.shape({
     "bedrooms": PropTypes.number,
     "city": PropTypes.shape({

@@ -107,10 +107,34 @@ const reducer = (state, action) => {
         },
       };
 
-    case ActionType.LOAD_REVIEWS:
+    case ActionType.REVIEWS_SUCCESS:
       return {
         ...state,
-        reviews: action.payload,
+        reviews: {
+          data: action.payload,
+          loading: false,
+          error: null,
+        },
+      };
+
+    case ActionType.REVIEWS_REQUEST:
+      return {
+        ...state,
+        reviews: {
+          data: null,
+          loading: true,
+          error: null,
+        },
+      };
+
+    case ActionType.REVIEWS_FAILURE:
+      return {
+        ...state,
+        reviews: {
+          data: null,
+          loading: false,
+          error: action.payload,
+        },
       };
 
     case ActionType.FAVORITE_OFFERS_SUCCESS:
