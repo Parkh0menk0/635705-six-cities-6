@@ -29,7 +29,7 @@ export const fetchNearOffers = (id) => (dispatch, _getState, api) =>
 export const fetchReviews = (id) => (dispatch, _getState, api) =>
   api
     .get(`comments/${id}`)
-    .then(({data}) => dispatch(ActionCreator.laodReviewsSuccess(data)));
+    .then(({data}) => dispatch(ActionCreator.loadReviewsSuccess(data)));
 
 export const fetchFavoriteOffers = () => (dispatch, _getState, api) => {
   dispatch(ActionCreator.requestFavoriteOffers());
@@ -46,7 +46,7 @@ export const submitComment = (id, {review: comment, rating}) => (
 ) =>
   api
     .post(`${APIRoutes.REVIEWS}/${id}`, {comment, rating})
-    .then(({data}) => dispatch(ActionCreator.laodReviewsSuccess(data)))
+    .then(({data}) => dispatch(ActionCreator.loadReviewsSuccess(data)))
     .catch(() => dispatch(ActionCreator.laodReviewsFailured()));
 
 export const checkAuth = () => (dispatch, _getState, api) =>

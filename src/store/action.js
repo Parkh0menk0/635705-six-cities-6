@@ -61,7 +61,7 @@ const OfferActionCreator = {
 };
 
 const ReviewActionCreator = {
-  laodReviewsSuccess: (reviews) => ({
+  loadReviewsSuccess: (reviews) => ({
     type: ActionType.REVIEWS_SUCCESS,
     payload: reviews
   }),
