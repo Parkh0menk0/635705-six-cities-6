@@ -11,18 +11,23 @@ import PlacesList from "src/components/places/places";
 import {AppRoute} from "src/const";
 
 const FavoritesPage = ({favoriteOffers, changeCity, loadFavoriteOffers}) => {
-
   useEffect(() => {
     if (!favoriteOffers.data) {
       loadFavoriteOffers();
     }
   }, [favoriteOffers]);
 
+  useEffect(() => {
+    loadFavoriteOffers();
+  }, []);
+
   if (favoriteOffers.loading) {
     return <LoadingScreen />;
   }
 
-  const cityList = [...new Set(favoriteOffers.data.map((offer) => offer.city.name))];
+  const cityList = [
+    ...new Set(favoriteOffers.data.map((offer) => offer.city.name)),
+  ];
 
   const cardClickHandler = (city) => {
     changeCity(city);

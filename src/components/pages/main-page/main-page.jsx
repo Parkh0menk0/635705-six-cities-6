@@ -16,7 +16,11 @@ const MainPage = ({city, onCityClick, offers, loadOffersData, ...props}) => {
     if (!offers.error && !offers.loading && offers.data === null) {
       loadOffersData();
     }
-  }, [offers]);
+  }, [offers.error, offers.loading, offers.data]);
+
+  useEffect(() => {
+    loadOffersData();
+  }, []);
 
   if (offers.loading) {
     return (
