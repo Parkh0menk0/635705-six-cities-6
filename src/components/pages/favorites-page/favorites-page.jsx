@@ -33,46 +33,45 @@ const FavoritesPage = ({favoriteOffers, changeCity, loadFavoriteOffers}) => {
     changeCity(city);
   };
 
+  if (!favoriteOffers.data) {
+    return null;
+  }
+
   return (
-    favoriteOffers.data.length && (
-      <div className="page">
-        <Header />
-        <main className="page__main page__main--favorites">
-          <div className="page__favorites-container container">
-            <section className="favorites">
-              <h1 className="favorites__title">Saved listing</h1>
-              <ul className="favorites__list">
-                {cityList.map((city, i) => (
-                  <li
-                    key={city + i}
-                    className="favorites__locations-items"
-                    onClick={() => cardClickHandler(city)}
-                  >
-                    <div className="favorites__locations locations locations--current">
-                      <div className="locations__item">
-                        <Link
-                          to={AppRoute.MAIN}
-                          className="locations__item-link"
-                        >
-                          <span>{city}</span>
-                        </Link>
-                      </div>
+    <div className="page">
+      <Header />
+      <main className="page__main page__main--favorites">
+        <div className="page__favorites-container container">
+          <section className="favorites">
+            <h1 className="favorites__title">Saved listing</h1>
+            <ul className="favorites__list">
+              {cityList.map((city, i) => (
+                <li
+                  key={city + i}
+                  className="favorites__locations-items"
+                  onClick={() => cardClickHandler(city)}
+                >
+                  <div className="favorites__locations locations locations--current">
+                    <div className="locations__item">
+                      <Link to={AppRoute.MAIN} className="locations__item-link">
+                        <span>{city}</span>
+                      </Link>
                     </div>
-                    <PlacesList
-                      pageType="favorites"
-                      offers={favoriteOffers.data.filter(
-                          (offer) => offer.city.name === city
-                      )}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    )
+                  </div>
+                  <PlacesList
+                    pageType="favorites"
+                    offers={favoriteOffers.data.filter(
+                        (offer) => offer.city.name === city
+                    )}
+                  />
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+      </main>
+      <Footer />
+    </div>
   );
 };
 
