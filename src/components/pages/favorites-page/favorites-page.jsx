@@ -1,11 +1,42 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
+import {fetchFavoriteOffers} from "src/store/api-actions";
+import LoadingScreen from "src/components/loading-screen/loading-screen";
+import {ActionCreator} from "src/store/action";
 import {connect} from "react-redux";
 import Header from "src/components/layout/header/header";
 import Footer from "src/components/layout/footer/footer";
 import PlacesList from "src/components/places/places";
+import {AppRoute} from "src/const";
 
-const FavoritesPage = ({offers}) => {
+const FavoritesPage = ({favoriteOffers, changeCity, loadFavoriteOffers}) => {
+  useEffect(() => {
+    if (!favoriteOffers.data) {
+      loadFavoriteOffers();
+    }
+  }, [favoriteOffers]);
+
+  useEffect(() => {
+    loadFavoriteOffers();
+  }, []);
+
+  if (favoriteOffers.loading) {
+    return <LoadingScreen />;
+  }
+
+  const cityList = [
+    ...new Set(favoriteOffers.data.map((offer) => offer.city.name)),
+  ];
+
+  const cardClickHandler = (city) => {
+    changeCity(city);
+  };
+
+  if (!favoriteOffers.data) {
+    return null;
+  }
+
   return (
     <div className="page">
       <Header />
@@ -14,36 +45,27 @@ const FavoritesPage = ({offers}) => {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Amsterdam</span>
-                    </a>
+              {cityList.map((city, i) => (
+                <li
+                  key={city + i}
+                  className="favorites__locations-items"
+                  onClick={() => cardClickHandler(city)}
+                >
+                  <div className="favorites__locations locations locations--current">
+                    <div className="locations__item">
+                      <Link to={AppRoute.MAIN} className="locations__item-link">
+                        <span>{city}</span>
+                      </Link>
+                    </div>
                   </div>
-                </div>
-                <PlacesList
-                  pageType="favorites"
-                  offers={offers.filter(
-                      (offer) => offer.city.name === `Amsterdam`
-                  )}
-                />
-              </li>
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Cologne</span>
-                    </a>
-                  </div>
-                </div>
-                <PlacesList
-                  pageType="favorites"
-                  offers={offers.filter(
-                      (offer) => offer.city.name === `Cologne`
-                  )}
-                />
-              </li>
+                  <PlacesList
+                    pageType="favorites"
+                    offers={favoriteOffers.data.filter(
+                        (offer) => offer.city.name === city
+                    )}
+                  />
+                </li>
+              ))}
             </ul>
           </section>
         </div>
@@ -54,12 +76,23 @@ const FavoritesPage = ({offers}) => {
 };
 
 FavoritesPage.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.object),
+  favoriteOffers: PropTypes.object,
+  changeCity: PropTypes.func.isRequired,
+  loadFavoriteOffers: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
+  favoriteOffers: state.favoriteOffers,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeCity(city) {
+    dispatch(ActionCreator.incrementCity(city));
+  },
+  loadFavoriteOffers() {
+    dispatch(fetchFavoriteOffers());
+  },
 });
 
 export {FavoritesPage};
-export default connect(mapStateToProps)(FavoritesPage);
+export default connect(mapStateToProps, mapDispatchToProps)(FavoritesPage);

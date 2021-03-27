@@ -71,6 +71,102 @@ const reducer = (state, action) => {
         },
       };
 
+    case ActionType.LOAD_OFFER:
+      return {
+        ...state,
+        openedOffer: action.payload,
+      };
+
+    case ActionType.NEAR_OFFERS_SUCCESS:
+      return {
+        ...state,
+        nearOffers: {
+          data: action.payload,
+          loading: false,
+          error: null,
+        },
+      };
+
+    case ActionType.NEAR_OFFERS_REQUEST:
+      return {
+        ...state,
+        nearOffers: {
+          data: null,
+          loading: true,
+          error: null,
+        },
+      };
+
+    case ActionType.NEAR_OFFERS_FAILURE:
+      return {
+        ...state,
+        nearOffers: {
+          data: null,
+          loading: false,
+          error: action.payload,
+        },
+      };
+
+    case ActionType.REVIEWS_SUCCESS:
+      return {
+        ...state,
+        reviews: {
+          data: action.payload,
+          loading: false,
+          error: null,
+        },
+      };
+
+    case ActionType.REVIEWS_REQUEST:
+      return {
+        ...state,
+        reviews: {
+          data: null,
+          loading: true,
+          error: null,
+        },
+      };
+
+    case ActionType.REVIEWS_FAILURE:
+      return {
+        ...state,
+        reviews: {
+          data: null,
+          loading: false,
+          error: action.payload,
+        },
+      };
+
+    case ActionType.FAVORITE_OFFERS_SUCCESS:
+      return {
+        ...state,
+        favoriteOffers: {
+          data: action.payload,
+          loading: false,
+          error: null,
+        },
+      };
+
+    case ActionType.FAVORITE_OFFERS_REQUEST:
+      return {
+        ...state,
+        favoriteOffers: {
+          data: null,
+          loading: true,
+          error: null,
+        },
+      };
+
+    case ActionType.FAVORITE_OFFERS_FAILURE:
+      return {
+        ...state,
+        favoriteOffers: {
+          data: null,
+          loading: false,
+          error: action.payload,
+        },
+      };
+
     default:
       return state;
   }

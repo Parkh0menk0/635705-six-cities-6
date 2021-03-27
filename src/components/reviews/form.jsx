@@ -1,8 +1,9 @@
 import React, {useState} from "react";
+import PropTypes from 'prop-types';
 import Star from "src/components/star/star";
 import {MAX_RATING} from "src/const";
 
-const ReviewsForm = () => {
+const ReviewsForm = ({openedOffer, submitCommentOnServer}) => {
   const [userForm, setUserForm] = useState({
     stars: null,
     review: ``,
@@ -10,6 +11,7 @@ const ReviewsForm = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    submitCommentOnServer(openedOffer.id, {review: userForm.review, rating: userForm.stars});
   };
 
   const handleRadioChange = (evt) => {
@@ -29,7 +31,7 @@ const ReviewsForm = () => {
         className="reviews__form form"
         action="#"
         method="post"
-        onSubmit={handleSubmit}
+        onSubmit={(evt) => handleSubmit(evt)}
       >
         <label className="reviews__label form__label" htmlFor="review">
           Your review
@@ -68,6 +70,36 @@ const ReviewsForm = () => {
       </form>
     </React.Fragment>
   );
+};
+
+ReviewsForm.propTypes = {
+  openedOffer: PropTypes.shape({
+    "bedrooms": PropTypes.number,
+    "city": PropTypes.shape({
+      "location": PropTypes.objectOf(PropTypes.number),
+      "name": PropTypes.string
+    }),
+    "description": PropTypes.string,
+    "goods": PropTypes.arrayOf(PropTypes.string),
+    "host": PropTypes.shape({
+      "avatar_url": PropTypes.string,
+      "id": PropTypes.number.isRequired,
+      "is_pro": PropTypes.bool,
+      "name": PropTypes.string
+    }),
+    "id": PropTypes.number.isRequired,
+    "images": PropTypes.arrayOf(PropTypes.string),
+    "is_favorite": PropTypes.bool,
+    "is_premium": PropTypes.bool,
+    "location": PropTypes.objectOf(PropTypes.number),
+    "max_adults": PropTypes.number,
+    "preview_image": PropTypes.string,
+    "price": PropTypes.number,
+    "rating": PropTypes.number,
+    "title": PropTypes.string,
+    "type": PropTypes.string
+  }),
+  submitCommentOnServer: PropTypes.func.isRequired,
 };
 
 export default ReviewsForm;

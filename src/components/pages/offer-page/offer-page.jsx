@@ -1,21 +1,47 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
-import {useParams} from "react-router-dom";
+import {useRouteMatch} from "react-router-dom";
 import {connect} from "react-redux";
+import classNames from "classnames";
 import Header from "src/components/layout/header/header";
+import {AuthorizationStatus} from "src/api";
 import ReviewsList from "src/components/reviews/reviews";
 import ReviewsForm from "src/components/reviews/form";
 import OfferPropertyGallery from "src/components/offer/offer-gallery";
 import PlacesList from "src/components/places/places";
 import {Housing} from "src/const";
 import {MAX_RATING} from "src/const";
+import {submitComment} from "src/store/api-actions";
+// import Map from "src/components/map/map";
+import {
+  fetchOffer,
+  fetchNearOffers,
+  fetchReviews,
+} from "src/store/api-actions";
+import LoadingScreen from "src/components/loading-screen/loading-screen";
 
-const OFFERS_RENTAL_LIMIT = 3;
+const OfferPage = ({
+  reviews,
+  openedOffer,
+  submitCommentOnServer,
+  status,
+  loadOffer,
+  nearOffers,
+  loadNearOffersSuccess,
+  loadReviews,
+}) => {
+  const match = useRouteMatch();
+  const pathId = parseInt(match.params.id.slice(1), 10);
 
-const OfferPage = ({offers, reviews}) => {
-  const {id} = useParams();
-  const offer = offers.find((item) => `:${item.id}` === id);
-  const firstOffers = offers.filter((location) => location.city.name === offer.city.name).slice(0, OFFERS_RENTAL_LIMIT);
+  useEffect(() => {
+    if (openedOffer.id !== pathId) {
+      loadNearOffersSuccess(pathId);
+      loadReviews(pathId);
+      loadOffer(pathId);
+
+      // return <LoadingScreen />;
+    }
+  }, [openedOffer.id]);
 
   const {
     is_premium: isPremium,
@@ -27,9 +53,11 @@ const OfferPage = ({offers, reviews}) => {
     max_adults: maxAdults,
     price,
     goods,
-    host: {name, avatar_url: avatarUrl},
+    host: {name, avatar_url: avatarUrl, is_pro: isPro},
     description,
-  } = offer;
+    // city,
+    is_favorite: isFavorite,
+  } = openedOffer;
 
   return (
     <div className="page">
@@ -50,7 +78,9 @@ const OfferPage = ({offers, reviews}) => {
               <div className="property__name-wrapper">
                 <h1 className="property__name">{title}</h1>
                 <button
-                  className="property__bookmark-button button"
+                  className={classNames(`property__bookmark-button button`, {
+                    "property__bookmark-button--active": isFavorite,
+                  })}
                   type="button"
                 >
                   <svg
@@ -60,7 +90,9 @@ const OfferPage = ({offers, reviews}) => {
                   >
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
-                  <span className="visually-hidden">To bookmarks</span>
+                  <span className="visually-hidden">
+                    {isFavorite ? `In bookmarks` : `To bookmarks`}
+                  </span>
                 </button>
               </div>
               <div className="property__rating rating">
@@ -100,7 +132,15 @@ const OfferPage = ({offers, reviews}) => {
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
+                  <div
+                    className={classNames(
+                        `property__avatar-wrapper`,
+                        `user__avatar-wrapper`,
+                        {
+                          "property__avatar-wrapper--pro": isPro,
+                        }
+                    )}
+                  >
                     <img
                       className="property__avatar user__avatar"
                       src={avatarUrl}
@@ -123,38 +163,105 @@ const OfferPage = ({offers, reviews}) => {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">
                   Reviews ·{` `}
-                  <span className="reviews__amount">{reviews.length}</span>
+                  <span className="reviews__amount">{reviews.data.length}</span>
                 </h2>
-                <ReviewsList reviews={reviews} />
-                <ReviewsForm />
+                {reviews.data ? (
+                  <ReviewsList reviews={reviews.data} />
+                ) : (
+                  <LoadingScreen />
+                )}
+
+                {status === AuthorizationStatus.AUTH && (
+                  <ReviewsForm
+                    openedOffer={openedOffer}
+                    submitCommentOnServer={submitCommentOnServer}
+                  />
+                )}
               </section>
             </div>
           </div>
-
-          <section className="property__map map" />
-        </section>
-        <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">
-              Other places in the neighbourhood
-            </h2>
-            <PlacesList pageType="offer" offers={firstOffers} />
+          <section className="property__map map">
+            {/* {nearOffers.data ? (
+              <Map offers={nearOffers.data} city={city} />
+            ) : (
+              <LoadingScreen />
+            )} */}
           </section>
-        </div>
+        </section>
+        {nearOffers.data ? (
+          <div className="container">
+            <section className="near-places places">
+              <h2 className="near-places__title">
+                Other places in the neighbourhood
+              </h2>
+              <PlacesList pageType="offer" offers={nearOffers.data} />
+            </section>
+          </div>
+        ) : (
+          <LoadingScreen />
+        )}
       </main>
     </div>
   );
 };
 
 OfferPage.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.object),
-  reviews: PropTypes.arrayOf(PropTypes.object),
+  status: PropTypes.string.isRequired,
+  reviews: PropTypes.object,
+  openedOffer: PropTypes.shape({
+    "bedrooms": PropTypes.number,
+    "city": PropTypes.shape({
+      "location": PropTypes.objectOf(PropTypes.number),
+      "name": PropTypes.string
+    }),
+    "description": PropTypes.string,
+    "goods": PropTypes.arrayOf(PropTypes.string),
+    "host": PropTypes.shape({
+      "avatar_url": PropTypes.string,
+      "id": PropTypes.number.isRequired,
+      "is_pro": PropTypes.bool,
+      "name": PropTypes.string
+    }),
+    "id": PropTypes.number.isRequired,
+    "images": PropTypes.arrayOf(PropTypes.string),
+    "is_favorite": PropTypes.bool,
+    "is_premium": PropTypes.bool,
+    "location": PropTypes.objectOf(PropTypes.number),
+    "max_adults": PropTypes.number,
+    "preview_image": PropTypes.string,
+    "price": PropTypes.number,
+    "rating": PropTypes.number,
+    "title": PropTypes.string,
+    "type": PropTypes.string
+  }),
+  submitCommentOnServer: PropTypes.func.isRequired,
+  nearOffers: PropTypes.object.isRequired,
+  loadOffer: PropTypes.func.isRequired,
+  loadNearOffersSuccess: PropTypes.func.isRequired,
+  loadReviews: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
+  status: state.user.status,
+  openedOffer: state.openedOffer,
+  nearOffers: state.nearOffers,
   reviews: state.reviews,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  submitCommentOnServer(id, review) {
+    dispatch(submitComment(id, review));
+  },
+  loadOffer(id) {
+    dispatch(fetchOffer(id));
+  },
+  loadNearOffersSuccess(id) {
+    dispatch(fetchNearOffers(id));
+  },
+  loadReviews(id) {
+    dispatch(fetchReviews(id));
+  },
+});
 
-export default connect(mapStateToProps)(OfferPage);
+export {OfferPage};
+export default connect(mapStateToProps, mapDispatchToProps)(OfferPage);
