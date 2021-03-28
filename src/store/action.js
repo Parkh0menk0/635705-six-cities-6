@@ -18,6 +18,10 @@ export const ActionType = {
   NEAR_OFFERS_REQUEST: `nearOffers/request`,
   NEAR_OFFERS_SUCCESS: `nearOffers/success`,
   NEAR_OFFERS_FAILURE: `nearOffers/failure`,
+  TOGGLE_FAVORITE: `favoriteOffers/toggleFavorite`,
+  TOGGLE_OPENED_CARD_FAVORITE: `favoriteOffers/toggleOpenedCardFavorite`,
+  ADD_TO_FAVORITE: `favoriteOffers/addToFavorite`,
+  REMOVE_FROM_FAVORITE: `favoriteOffers/removeFromFavorite`,
 };
 
 const OfferActionCreator = {
@@ -57,6 +61,21 @@ const OfferActionCreator = {
   loadFavoriteOffersFailure: (error) => ({
     type: ActionType.FAVORITE_OFFERS_FAILURE,
     payload: error
+  }),
+  toggleFavorite: (id) => ({
+    type: ActionType.TOGGLE_FAVORITE,
+    payload: id
+  }),
+  toggleOpenedCardFavorite: () => ({
+    type: ActionType.TOGGLE_OPENED_CARD_FAVORITE
+  }),
+  addToFavorite: (offer) => ({
+    type: ActionType.ADD_TO_FAVORITE,
+    payload: offer
+  }),
+  removeFromFavorite: (id) => ({
+    type: ActionType.REMOVE_FROM_FAVORITE,
+    payload: id
   }),
 };
 

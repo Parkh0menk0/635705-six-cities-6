@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import Star from "src/components/star/star";
 import {MAX_RATING} from "src/const";
 

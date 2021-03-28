@@ -11,14 +11,16 @@ import OfferPropertyGallery from "src/components/offer/offer-gallery";
 import PlacesList from "src/components/places/places";
 import {Housing} from "src/const";
 import {MAX_RATING} from "src/const";
-import {submitComment} from "src/store/api-actions";
 // import Map from "src/components/map/map";
 import {
   fetchOffer,
   fetchNearOffers,
   fetchReviews,
+  submitComment,
+  toggleFavorite,
 } from "src/store/api-actions";
 import LoadingScreen from "src/components/loading-screen/loading-screen";
+import {ActionCreator} from "src/store/action";
 
 const OfferPage = ({
   reviews,
@@ -29,6 +31,8 @@ const OfferPage = ({
   nearOffers,
   loadNearOffersSuccess,
   loadReviews,
+  toggleFavoriteOnClick,
+  toggleOpenedCardFavorite,
 }) => {
   const match = useRouteMatch();
   const pathId = parseInt(match.params.id.slice(1), 10);
@@ -44,6 +48,7 @@ const OfferPage = ({
   }, [openedOffer.id]);
 
   const {
+    id,
     is_premium: isPremium,
     images,
     title,
@@ -58,6 +63,12 @@ const OfferPage = ({
     // city,
     is_favorite: isFavorite,
   } = openedOffer;
+
+  const cardFavorClickHandler = (cardId, cardStatus) => {
+    const newStatus = cardStatus ? 0 : 1;
+    toggleFavoriteOnClick(cardId, newStatus);
+    toggleOpenedCardFavorite();
+  };
 
   return (
     <div className="page">
@@ -82,6 +93,12 @@ const OfferPage = ({
                     "property__bookmark-button--active": isFavorite,
                   })}
                   type="button"
+                  onClick={() =>
+                    cardFavorClickHandler(
+                        id,
+                        isFavorite ? `property__bookmark-button--active` : ``
+                    )
+                  }
                 >
                   <svg
                     className="property__bookmark-icon"
@@ -239,6 +256,8 @@ OfferPage.propTypes = {
   loadOffer: PropTypes.func.isRequired,
   loadNearOffersSuccess: PropTypes.func.isRequired,
   loadReviews: PropTypes.func.isRequired,
+  toggleFavoriteOnClick: PropTypes.func.isRequired,
+  toggleOpenedCardFavorite: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -260,6 +279,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadReviews(id) {
     dispatch(fetchReviews(id));
+  },
+  toggleFavoriteOnClick(id, status) {
+    dispatch(toggleFavorite(id, status));
+  },
+  toggleOpenedCardFavorite() {
+    dispatch(ActionCreator.toggleOpenedCardFavorite());
   },
 });
 

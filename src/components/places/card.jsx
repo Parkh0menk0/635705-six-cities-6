@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {Housing, ImageSize, AppRoute} from "src/const";
 import {MAX_RATING} from "src/const";
 
-const PlaceCard = ({pageType, offer, handleMouseEnter, handleMouseOut}) => {
+const PlaceCard = ({pageType, offer, handleMouseEnter, handleMouseOut, toggleFavoriteOnClick}) => {
 
   const {
     is_premium: isPremium,
@@ -19,6 +19,11 @@ const PlaceCard = ({pageType, offer, handleMouseEnter, handleMouseOut}) => {
 
   const shouldBeMarked = pageType === `main` && isPremium;
   const getOfferPath = (id) => AppRoute.ROOM.replace(/id/, id);
+
+  const cardFavoriteClickHandler = (cardId, status) => {
+    const newStatus = Number(!status);
+    toggleFavoriteOnClick(cardId, newStatus);
+  };
 
   return (
     <article
@@ -40,7 +45,7 @@ const PlaceCard = ({pageType, offer, handleMouseEnter, handleMouseOut}) => {
         "cities__image-wrapper": pageType === `main`,
         "near-places__image-wrapper": pageType === `offer`
       })}>
-        <a href="#">
+        <Link to={getOfferPath(offer.id)}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -48,7 +53,7 @@ const PlaceCard = ({pageType, offer, handleMouseEnter, handleMouseOut}) => {
             height={pageType === `favorites` ? ImageSize.SMALL.width : ImageSize.LARGE.height}
             alt={Housing[type]}
           />
-        </a>
+        </Link>
       </div>
       <div className={pageType === `favorites` ? `favorites__card-info place-card__info` : `place-card__info`}>
         <div className="place-card__price-wrapper">
@@ -61,6 +66,7 @@ const PlaceCard = ({pageType, offer, handleMouseEnter, handleMouseOut}) => {
               isFavorite && `place-card__bookmark-button--active`
             }`}
             type="button"
+            onClick={() => cardFavoriteClickHandler(offer.id, isFavorite)}
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
@@ -113,6 +119,7 @@ PlaceCard.propTypes = {
   pageType: PropTypes.string,
   handleMouseEnter: PropTypes.func,
   handleMouseOut: PropTypes.func,
+  toggleFavoriteOnClick: PropTypes.func.isRequired,
 };
 
 export default PlaceCard;

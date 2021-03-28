@@ -1,6 +1,6 @@
 import {ActionCreator} from "./action";
 import {APIRoutes, AppRoute} from "src/const";
-import {notExisteOffer} from "src/api";
+import {notExisteOffer, unAuthorizationUser} from "src/api";
 
 export const fetchOffersList = () => (dispatch, _getState, api) => {
   dispatch(ActionCreator.requestOffers());
@@ -65,3 +65,21 @@ export const login = ({login: email, password}) => (
     .then(({data}) => dispatch(ActionCreator.authorizationSuccess(data)))
     .then(() => dispatch(ActionCreator.redirectToRoute(`/`)))
     .catch(() => dispatch(ActionCreator.authorizationFailured()));
+
+export const toggleFavorite = (id, status) => (dispatch, _getState, api) =>
+  api
+    .post(`${APIRoutes.FAVORITES}/${id}/${status}`)
+    .then(({data}) => {
+      dispatch(ActionCreator.toggleFavorite(data));
+
+      if (status) {
+        dispatch(ActionCreator.addToFavorite(data));
+      } else {
+        dispatch(ActionCreator.removeFromFavorite(data.id));
+      }
+    })
+    .catch((err) => {
+      unAuthorizationUser(err, () =>
+        dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN))
+      );
+    });

@@ -9,13 +9,14 @@ import Header from "src/components/layout/header/header";
 import Footer from "src/components/layout/footer/footer";
 import PlacesList from "src/components/places/places";
 import {AppRoute} from "src/const";
+import FavoritesEmpty from "../favorites-empty/favorites-empty";
 
 const FavoritesPage = ({favoriteOffers, changeCity, loadFavoriteOffers}) => {
   useEffect(() => {
     if (!favoriteOffers.data) {
       loadFavoriteOffers();
     }
-  }, [favoriteOffers]);
+  }, [favoriteOffers.data]);
 
   useEffect(() => {
     loadFavoriteOffers();
@@ -34,7 +35,7 @@ const FavoritesPage = ({favoriteOffers, changeCity, loadFavoriteOffers}) => {
   };
 
   if (!favoriteOffers.data) {
-    return null;
+    return (<FavoritesEmpty />);
   }
 
   return (

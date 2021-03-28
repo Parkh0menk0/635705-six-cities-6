@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import PlaceCard from "./card";
 
-const PlacesList = ({pageType, offers, onHoverOffer, activeOfferId}) => {
+const PlacesList = ({pageType, offers, onHoverOffer, activeOfferId, toggleFavoriteOnClick}) => {
 
   const changeOffer = (evt, id) => {
     evt.preventDefault();
@@ -33,6 +33,7 @@ const PlacesList = ({pageType, offers, onHoverOffer, activeOfferId}) => {
           handleMouseOut={() => {
             setActiveCard(null);
           }}
+          toggleFavoriteOnClick={toggleFavoriteOnClick}
         />
       ))}
     </div>
@@ -43,7 +44,8 @@ PlacesList.propTypes = {
   pageType: PropTypes.string,
   offers: PropTypes.arrayOf(PropTypes.object),
   onHoverOffer: PropTypes.func.isRequired,
-  activeOfferId: PropTypes.number
+  activeOfferId: PropTypes.number,
+  toggleFavoriteOnClick: PropTypes.func.isRequired,
 };
 
 export default PlacesList;

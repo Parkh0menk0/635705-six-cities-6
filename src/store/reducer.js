@@ -2,6 +2,33 @@ import {ActionType} from "./action";
 import {SORT_LIST} from "src/const";
 import {AuthorizationStatus} from "src/api";
 
+const getItemIndex = (list, id) => {
+  const idList = list.map((item) => item.id);
+  return idList.indexOf(id);
+};
+
+const toggleCardFavorite = (offer, currentOfferList) => {
+  const cardIndex = getItemIndex(currentOfferList, offer.id);
+  return [
+    ...currentOfferList.slice(0, cardIndex),
+    offer,
+    ...currentOfferList.slice(cardIndex + 1, currentOfferList.length),
+  ];
+};
+
+const addCardToFavoriteOffers = (newFavoriteOffer, currentFavoriteOffers) => {
+  return [...currentFavoriteOffers, newFavoriteOffer];
+};
+
+const removeCardFromFavoriteOffers = (offerId, currentFavoriteOffers) => {
+  const cardIndex = getItemIndex(currentFavoriteOffers, offerId);
+
+  return [
+    ...currentFavoriteOffers.slice(0, cardIndex),
+    ...currentFavoriteOffers.slice(cardIndex + 1, currentFavoriteOffers.length),
+  ];
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
     case ActionType.SET_CITY:
@@ -164,6 +191,47 @@ const reducer = (state, action) => {
           data: null,
           loading: false,
           error: action.payload,
+        },
+      };
+
+    case ActionType.TOGGLE_FAVORITE:
+      return {
+        ...state,
+        offers: {
+          data: toggleCardFavorite(action.payload, state.offers),
+          loading: false,
+          error: null,
+        },
+      };
+
+    case ActionType.TOGGLE_OPENED_CARD_FAVORITE:
+      return {
+        ...state,
+        openedOffer: Object.assign({}, state.openedOffer, {
+          isFavorite: !state.openedOffer.isFavorite,
+        }),
+      };
+
+    case ActionType.ADD_TO_FAVORITE:
+      return {
+        ...state,
+        favoriteOffers: {
+          data: addCardToFavoriteOffers(action.payload, state.favoriteOffers),
+          loading: false,
+          error: null,
+        },
+      };
+
+    case ActionType.REMOVE_FROM_FAVORITE:
+      return {
+        ...state,
+        favoriteOffers: {
+          data: removeCardFromFavoriteOffers(
+              action.payload,
+              state.favoriteOffers
+          ),
+          loading: false,
+          error: null,
         },
       };
 
