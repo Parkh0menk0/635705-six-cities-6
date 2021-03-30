@@ -46,4 +46,4 @@ const mapStateToProps = (state) => ({
 });
 
 export {Authorization};
-export default connect(mapStateToProps, null)(Authorization);
+export default connect(mapStateToProps, null)(React.memo(Authorization));

@@ -122,4 +122,4 @@ PlaceCard.propTypes = {
   toggleFavoriteOnClick: PropTypes.func.isRequired,
 };
 
-export default PlaceCard;
+export default React.memo(PlaceCard);

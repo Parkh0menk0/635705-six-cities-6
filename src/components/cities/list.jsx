@@ -76,4 +76,4 @@ CitiesList.propTypes = {
   onSetSortOption: PropTypes.func.isRequired,
 };
 
-export default CitiesList;
+export default React.memo(CitiesList);
