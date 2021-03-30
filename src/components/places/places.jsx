@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import PlaceCard from "./card";
+import PlaceCard from "src/components/places-card/places-card";
 
 const PlacesList = ({pageType, offers, onHoverOffer, activeOfferId, toggleFavoriteOnClick}) => {
 

@@ -2,7 +2,7 @@ import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import {mapTypes} from "src/const";
 import Map from "src/components/map/map";
-import PlaceSort from "src/components/places/sort";
+import PlaceSort from "src/components/places-sort/places-sort";
 import PlacesList from "src/components/places/places";
 
 

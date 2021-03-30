@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {useHistory} from "react-router-dom";
 import Header from "src/components/layout/header/header";
-import AuthorizationForm from "src/components/authorization/form";
+import AuthorizationForm from "src/components/authorization-form/authorization-form";
 import {AuthorizationStatus} from "src/api";
 
 const LoginPage = ({user}) => {

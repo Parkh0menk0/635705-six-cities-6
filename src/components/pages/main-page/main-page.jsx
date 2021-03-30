@@ -4,9 +4,9 @@ import classNames from "classnames";
 import {connect} from "react-redux";
 import {ActionCreator} from "src/store/action";
 import Header from "src/components/layout/header/header";
-import CitiesTabs from "src/components/cities/tabs";
-import CitiesList from "src/components/cities/list";
-import CitiesEmpty from "src/components/cities/empty";
+import CitiesTabs from "src/components/cities-tabs/cities-tabs";
+import CitiesList from "src/components/cities-list/cities-list";
+import CitiesEmpty from "src/components/cities-empty/cities-empty";
 import LoadingScreen from "src/components/loading-screen/loading-screen";
 import {fetchOffersList} from "src/store/api-actions";
 
