@@ -1,122 +1,114 @@
+import {createAction} from "@reduxjs/toolkit";
+import {adaptOfferToClient} from "src/utils/place";
+import {adaptReviewToClient} from "src/utils/review";
+
 export const ActionType = {
-  SET_CITY: `city/setCity`,
-  SET_SORT_OPTION: `sortOption/setSortOption`,
-  HOVER_OFFER: `offer/hoverOffer`,
-  OFFERS_REQUEST: `offers/request`,
-  OFFERS_SUCCESS: `offers/success`,
-  OFFERS_FAILURE: `offers/failure`,
-  REDIRECT_TO_ROUTE: `/redirectToRoute`,
-  AUTHORIZATION_SUCCESS: `auth/success`,
-  AUTHORIZATION_FAILURED: `auth/failured`,
+  LOAD_OFFERS: `data/loadOffers`,
   LOAD_OFFER: `data/loadOffer`,
-  REVIEWS_REQUEST: `reviews/request`,
-  REVIEWS_SUCCESS: `reviews/success`,
-  REVIEWS_FAILURE: `reviews/failure`,
-  FAVORITE_OFFERS_REQUEST: `favoriteOffers/request`,
-  FAVORITE_OFFERS_SUCCESS: `favoriteOffers/success`,
-  FAVORITE_OFFERS_FAILURE: `favoriteOffers/failure`,
-  NEAR_OFFERS_REQUEST: `nearOffers/request`,
-  NEAR_OFFERS_SUCCESS: `nearOffers/success`,
-  NEAR_OFFERS_FAILURE: `nearOffers/failure`,
-  TOGGLE_FAVORITE: `favoriteOffers/toggleFavorite`,
-  TOGGLE_OPENED_CARD_FAVORITE: `favoriteOffers/toggleOpenedCardFavorite`,
-  ADD_TO_FAVORITE: `favoriteOffers/addToFavorite`,
-  REMOVE_FROM_FAVORITE: `favoriteOffers/removeFromFavorite`,
+  SET_OFFER_LOADIGN: `data/setOfferLoading`,
+  LOAD_OFFERS_NEARBY: `data/loadOffersNearby`,
+  LOAD_COMMENTS: `data/loadComments`,
+  SEND_REVIEW: `data/sendReview`,
+  LOAD_FAVORITE: `data/loadFavorite`,
+  SET_FAVORITE_LOADIGN: `data/setFavoriteLoading`,
+
+  CHANGE_LOCATION: `app/changeLocation`,
+  CHANGE_SORT_TYPE: `app/changeSortType`,
+  REDIRECT_TO_ROUTE: `app/redirectToRoute`,
+  SET_ERROR_MESSAGE: `app/setErrorMessage`,
+  UNSET_ERROR_MESSAGE: `app/unsetErrorMessage`,
+  SET_ACTIVE_OFFER: `app/setActiveOffer`,
+
+  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  SET_USER: `user/setUser`
 };
 
-const OfferActionCreator = {
-  requestOffers: () => ({
-    type: ActionType.OFFERS_REQUEST,
-  }),
-  loadOffersSuccess: (offers) => ({
-    type: ActionType.OFFERS_SUCCESS,
-    payload: offers
-  }),
-  loadOffersFailure: (error) => ({
-    type: ActionType.OFFERS_FAILURE,
-    payload: error
-  }),
-  loadOffer: (offer) => ({
-    type: ActionType.LOAD_OFFER,
-    payload: offer
-  }),
-  requestNearOffers: () => ({
-    type: ActionType.NEAR_OFFERS_REQUEST,
-  }),
-  loadNearOffersSuccess: (offers) => ({
-    type: ActionType.NEAR_OFFERS_SUCCESS,
-    payload: offers
-  }),
-  loadNearOffersFailure: (error) => ({
-    type: ActionType.NEAR_OFFERS_FAILURE,
-    payload: error
-  }),
-  requestFavoriteOffers: () => ({
-    type: ActionType.FAVORITE_OFFERS_REQUEST,
-  }),
-  loadFavoriteOffersSuccess: (offers) => ({
-    type: ActionType.FAVORITE_OFFERS_SUCCESS,
-    payload: offers
-  }),
-  loadFavoriteOffersFailure: (error) => ({
-    type: ActionType.FAVORITE_OFFERS_FAILURE,
-    payload: error
-  }),
-  toggleFavorite: (id) => ({
-    type: ActionType.TOGGLE_FAVORITE,
-    payload: id
-  }),
-  toggleOpenedCardFavorite: () => ({
-    type: ActionType.TOGGLE_OPENED_CARD_FAVORITE
-  }),
-  addToFavorite: (offer) => ({
-    type: ActionType.ADD_TO_FAVORITE,
-    payload: offer
-  }),
-  removeFromFavorite: (id) => ({
-    type: ActionType.REMOVE_FROM_FAVORITE,
-    payload: id
-  }),
-};
+export const changeLocation = createAction(ActionType.CHANGE_LOCATION, (location) => {
+  return {
+    payload: location
+  };
+});
 
-const ReviewActionCreator = {
-  loadReviewsSuccess: (reviews) => ({
-    type: ActionType.REVIEWS_SUCCESS,
-    payload: reviews
-  }),
-  requestReviews: () => ({
-    type: ActionType.REVIEWS_REQUEST,
-  }),
-  loadReviewsFailure: (error) => ({
-    type: ActionType.REVIEWS_FAILURE,
-    payload: error
-  }),
-};
+export const changeSortType = createAction(ActionType.CHANGE_SORT_TYPE, (sortType) => {
+  return {
+    payload: sortType
+  };
+});
 
-export const ActionCreator = {
-  setCity: (city) => ({
-    type: ActionType.SET_CITY,
-    payload: city
-  }),
-  setSortOption: (sortOption) => ({
-    type: ActionType.SET_SORT_OPTION,
-    payload: sortOption
-  }),
-  hoverOffer: (id) => ({
-    type: ActionType.HOVER_OFFER,
+export const setActiveOffer = createAction(ActionType.SET_ACTIVE_OFFER, (id) => {
+  return {
     payload: id
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
+  };
+});
+
+export const loadOffers = createAction(ActionType.LOAD_OFFERS, (offers) => {
+  return {
+    payload: offers.map((item) => adaptOfferToClient(item))
+  };
+});
+
+export const loadOffer = createAction(ActionType.LOAD_OFFER, (offer) => {
+  return {
+    payload: adaptOfferToClient(offer)
+  };
+});
+
+export const loadComments = createAction(ActionType.LOAD_COMMENTS, (comments) => {
+  return {
+    payload: comments.map((item) => adaptReviewToClient(item))
+  };
+});
+
+export const loadOffersNearby = createAction(ActionType.LOAD_OFFERS_NEARBY, (offers) => {
+  return {
+    payload: offers.map((item) => adaptOfferToClient(item))
+  };
+});
+
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => {
+  return {
+    payload: status
+  };
+});
+
+export const setUser = createAction(ActionType.SET_USER, (user) => {
+  return {
+    payload: user
+  };
+});
+
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => {
+  return {
     payload: url
-  }),
-  authorizationSuccess: (info) => ({
-    type: ActionType.AUTHORIZATION_SUCCESS,
-    payload: info
-  }),
-  authorizationFailured: () => ({
-    type: ActionType.AUTHORIZATION_FAILURED,
-  }),
-  ...OfferActionCreator,
-  ...ReviewActionCreator,
-};
+  };
+});
+
+export const setErrorMessage = createAction(ActionType.SET_ERROR_MESSAGE, (message) => {
+  return {
+    payload: message
+  };
+});
+
+export const unsetErrorMessage = createAction(ActionType.UNSET_ERROR_MESSAGE, () => {
+  return {
+    payload: null
+  };
+});
+
+export const setOfferLoading = createAction(ActionType.SET_OFFER_LOADIGN, (isOfferLoading) => {
+  return {
+    payload: isOfferLoading
+  };
+});
+
+export const loadFavorite = createAction(ActionType.LOAD_FAVORITE, (favorite) => {
+  return {
+    payload: favorite.map((item) => adaptOfferToClient(item))
+  };
+});
+
+export const setFavoriteLoading = createAction(ActionType.SET_FAVORITE_LOADIGN, (status) => {
+  return {
+    payload: status
+  };
+});
