@@ -48,14 +48,3 @@ export const notExisteOffer = (err, notFound) => {
 
   throw err;
 };
-
-export const unAuthorizationUser = (err, unAuthorization) => {
-  const {response} = err;
-
-  if (response.status === HttpCode.UNAUTHORIZED) {
-    unAuthorization();
-    throw err;
-  }
-
-  throw err;
-};

@@ -1,6 +1,6 @@
 import {ActionCreator} from "./action";
 import {APIRoutes, AppRoute} from "src/const";
-import {notExisteOffer, unAuthorizationUser} from "src/api";
+import {notExisteOffer} from "src/api";
 
 export const fetchOffersList = () => (dispatch, _getState, api) => {
   dispatch(ActionCreator.requestOffers());
@@ -79,7 +79,5 @@ export const toggleFavorite = (id, status) => (dispatch, _getState, api) =>
       }
     })
     .catch((err) => {
-      unAuthorizationUser(err, () =>
-        dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN))
-      );
+        dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN));
     });
