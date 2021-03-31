@@ -1,57 +1,36 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
-import classNames from "classnames";
-import {SORT_LIST} from "src/const";
+import SortList from "src/components/sort-list/sort-list";
 
-const PlaceSort = ({sortOption, onSetSortOption}) => {
-  const [isDropDownOpen, setisDropDownOpen] = useState(false);
 
-  const handleClick = (evt, selectedSortOption) => {
-    evt.preventDefault();
-    if (selectedSortOption.id !== sortOption.id) {
-      onSetSortOption(selectedSortOption);
-    }
-  };
+const PlaceSort = ({sortTypes}) => {
+  const {sortType, locationCity} = useSelector((state) => state.APP);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const sortMenuClickHandler = () => setIsMenuOpen(!isMenuOpen);
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [sortType, locationCity]);
 
   return (
     <form className="places__sorting" action="#" method="get">
-      <span className="places__sorting-caption">Sort by </span>
-      <span
-        onMouseEnter={() => setisDropDownOpen(!isDropDownOpen)}
-        className="places__sorting-type"
-        tabIndex={0}
-      >
-        {sortOption.title}
-        <svg className="places__sorting-arrow" width={7} height={4}>
-          <use xlinkHref="#icon-arrow-select" />
+      <span className="places__sorting-caption">Sort by</span>
+      <span onClick={sortMenuClickHandler} className="places__sorting-type" tabIndex="0">
+        {sortType}
+        <svg className="places__sorting-arrow" width="7" height="4">
+          <use xlinkHref="#icon-arrow-select"/>
         </svg>
       </span>
-      <ul
-        onMouseLeave={() => setisDropDownOpen(!isDropDownOpen)}
-        className={classNames(`places__options places__options--custom`, {
-          "places__options--opened": isDropDownOpen,
-        })}
-      >
-        {SORT_LIST.map((predefinedSortOption) => (
-          <li
-            onClick={(evt) => handleClick(evt, predefinedSortOption)}
-            className={classNames(`places__option`, {
-              "places__option--active": predefinedSortOption.id === sortOption.id,
-            })}
-            key={predefinedSortOption.id}
-            tabIndex={0}
-          >
-            {predefinedSortOption.title}
-          </li>
-        ))}
-      </ul>
+      <SortList isOpen={isMenuOpen} sortTypes={sortTypes} />
     </form>
   );
 };
 
 PlaceSort.propTypes = {
-  sortOption: PropTypes.object.isRequired,
-  onSetSortOption: PropTypes.func.isRequired,
+  sortTypes: PropTypes.array.isRequired,
 };
+
 
 export default PlaceSort;

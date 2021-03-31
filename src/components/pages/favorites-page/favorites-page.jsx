@@ -1,99 +1,21 @@
-import React, {useEffect} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import {Link} from "react-router-dom";
-import {fetchFavoriteOffers} from "src/store/api-actions";
-import LoadingScreen from "src/components/loading-screen/loading-screen";
-import {ActionCreator} from "src/store/action";
-import {connect} from "react-redux";
-import Header from "src/components/layout/header/header";
-import Footer from "src/components/layout/footer/footer";
-import PlacesList from "src/components/places/places";
-import {AppRoute} from "src/const";
+import {propTypesPlace} from "src/utils/place";
+import withSpinner from "src/hocs/with-spinner/with-spinner";
+import Favorites from "src/components/favorites/favorites";
 import FavoritesEmpty from "src/components/favorites-empty/favorites-empty";
 
-const FavoritesPage = ({favoriteOffers, changeCity, loadFavoriteOffers}) => {
-  useEffect(() => {
-    if (!favoriteOffers.data) {
-      loadFavoriteOffers();
-    }
-  }, [favoriteOffers.data]);
-
-  useEffect(() => {
-    loadFavoriteOffers();
-  }, []);
-
-  if (favoriteOffers.loading) {
-    return <LoadingScreen />;
-  }
-
-  const cityList = [
-    ...new Set(favoriteOffers.data.map((offer) => offer.city.name)),
-  ];
-
-  const cardClickHandler = (city) => {
-    changeCity(city);
-  };
-
-  if (!favoriteOffers.data) {
-    return (<FavoritesEmpty />);
-  }
+const FavoritesPage = ({offers}) => {
 
   return (
-    <div className="page">
-      <Header />
-      <main className="page__main page__main--favorites">
-        <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {cityList.map((city, i) => (
-                <li
-                  key={city + i}
-                  className="favorites__locations-items"
-                  onClick={() => cardClickHandler(city)}
-                >
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <Link to={AppRoute.MAIN} className="locations__item-link">
-                        <span>{city}</span>
-                      </Link>
-                    </div>
-                  </div>
-                  <PlacesList
-                    pageType="favorites"
-                    offers={favoriteOffers.data.filter(
-                        (offer) => offer.city.name === city
-                    )}
-                  />
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-      </main>
-      <Footer />
-    </div>
+    (offers.length > 0) ?
+      <Favorites offers={offers} /> :
+      <FavoritesEmpty />
   );
 };
 
 FavoritesPage.propTypes = {
-  favoriteOffers: PropTypes.object,
-  changeCity: PropTypes.func.isRequired,
-  loadFavoriteOffers: PropTypes.func.isRequired,
+  offers: PropTypes.arrayOf(propTypesPlace).isRequired
 };
 
-const mapStateToProps = (state) => ({
-  favoriteOffers: state.favoriteOffers,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  changeCity(city) {
-    dispatch(ActionCreator.incrementCity(city));
-  },
-  loadFavoriteOffers() {
-    dispatch(fetchFavoriteOffers());
-  },
-});
-
-export {FavoritesPage};
-export default connect(mapStateToProps, mapDispatchToProps)(FavoritesPage);
+export default withSpinner(FavoritesPage);

@@ -1,17 +1,24 @@
 import React from "react";
-import Review from "src/components/review/review";
 import PropTypes from "prop-types";
+import {propTypesReview} from "src/utils/review";
+import ReviewsForm from "src/components/reviews-form/reviews-form";
+import Review from "src/components/review/review";
 
-const ReviewsList = ({reviews}) => {
+const Reviews = ({reviews}) => {
   return (
-    <ul className="reviews__list">
-      {reviews.map((review) => <Review review={review} key={review.id} />)}
-    </ul>
+    <section className="property__reviews reviews">
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+      <ul className="reviews__list">
+        {reviews.map((review, reviewId) => (
+          <Review key={reviewId} review={review}/>
+        ))}
+      </ul>
+      <ReviewsForm />
+    </section>
   );
 };
 
-ReviewsList.propTypes = {
-  reviews: PropTypes.arrayOf(PropTypes.object),
+Reviews.propTypes = {
+  reviews: PropTypes.arrayOf(propTypesReview).isRequired
 };
-
-export default ReviewsList;
+export default Reviews;

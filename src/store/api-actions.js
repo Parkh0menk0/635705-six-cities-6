@@ -10,7 +10,7 @@ import {
   setFavoriteLoading,
   setUser
 } from "./action";
-import {AppRoute, APIRoute} from "../const";
+import {AppRoute, APIRoute} from "src/const";
 import {AuthorizationStatus} from "src/api";
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (

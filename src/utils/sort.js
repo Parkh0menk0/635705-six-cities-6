@@ -1,4 +1,4 @@
-import {SortTypes} from "../const";
+import {SortTypes} from "src/const";
 
 const SortFuncMap = {
   [SortTypes.PRICE_INC]: (a, b) => a.price - b.price,

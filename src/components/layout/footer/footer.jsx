@@ -1,18 +1,20 @@
 import React from "react";
-import {Link} from 'react-router-dom';
+import {useHistory} from "react-router-dom";
+import {AppRoute} from "src/const";
 
 const Footer = () => {
+  const history = useHistory();
+
+  const handleLogoClick = (evt) => {
+    evt.preventDefault();
+    history.push(AppRoute.MAIN);
+  };
+
   return (
     <footer className="footer container">
-      <Link className="footer__logo-link" to="/">
-        <img
-          className="footer__logo"
-          src="img/logo.svg"
-          alt="6 cities logo"
-          width={64}
-          height={33}
-        />
-      </Link>
+      <a className="footer__logo-link" onClick={handleLogoClick}>
+        <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
+      </a>
     </footer>
   );
 };

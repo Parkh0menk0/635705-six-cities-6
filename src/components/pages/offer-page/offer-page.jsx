@@ -1,129 +1,99 @@
-import React, {useEffect} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {useRouteMatch} from "react-router-dom";
-import {connect} from "react-redux";
-import classNames from "classnames";
+import {useDispatch, useSelector} from "react-redux";
+import {useHistory, useParams} from "react-router-dom";
 import Header from "src/components/layout/header/header";
+import {makeRatingScore, propTypesPlace} from "src/utils/place";
+import {propTypesReview} from "src/utils/review";
+import Reviews from "src/components/reviews/reviews";
+import PropertyGallery from "src/components/offer-gallery/offer-gallery";
+import PlaceList from "src/components/place-list/place-list";
+import withSpinner from "src/hocs/with-spinner/with-spinner";
+import {AppRoute, MapType, PlaceListType} from "src/const";
 import {AuthorizationStatus} from "src/api";
-import ReviewsList from "src/components/reviews/reviews";
-import ReviewsForm from "src/components/reviews-form/reviews-form";
-import OfferPropertyGallery from "src/components/offer-gallery/offer-gallery";
-import PlacesList from "src/components/places/places";
-import {Housing} from "src/const";
-import {MAX_RATING} from "src/const";
-// import Map from "src/components/map/map";
-import {
-  fetchOffer,
-  fetchNearOffers,
-  fetchReviews,
-  submitComment,
-  toggleFavorite,
-} from "src/store/api-actions";
-import LoadingScreen from "src/components/loading-screen/loading-screen";
-import {ActionCreator} from "src/store/action";
+import Map from "src/components/map/map";
+import {setFavoriteStatus} from "src/store/api-actions";
 
-const OfferPage = ({
-  reviews,
-  openedOffer,
-  submitCommentOnServer,
-  status,
-  loadOffer,
-  nearOffers,
-  loadNearOffersSuccess,
-  loadReviews,
-  toggleFavoriteOnClick,
-  toggleOpenedCardFavorite,
-}) => {
-  const match = useRouteMatch();
-  const pathId = parseInt(match.params.id.slice(1), 10);
+const OfferPage = ({offer, comments, offersNearby}) => {
+  const {id} = useParams();
+  const authorizationStatus = useSelector((state) => state.USER.authorizationStatus);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  useEffect(() => {
-    if (openedOffer.id !== pathId) {
-      loadNearOffersSuccess(pathId);
-      loadReviews(pathId);
-      loadOffer(pathId);
+  const [isFavorite, setIsFavorite] = useState(offer.isFavorite);
 
-      // return <LoadingScreen />;
+  const handleBookmarkClick = () => {
+    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      history.push(AppRoute.LOGIN);
+      return;
     }
-  }, [openedOffer.id]);
+    setIsFavorite(!isFavorite);
 
-  const {
-    id,
-    is_premium: isPremium,
-    images,
-    title,
-    rating,
-    type,
-    bedrooms,
-    max_adults: maxAdults,
-    price,
-    goods,
-    host: {name, avatar_url: avatarUrl, is_pro: isPro},
-    description,
-    // city,
-    is_favorite: isFavorite,
-  } = openedOffer;
+    dispatch(setFavoriteStatus(id, !isFavorite ? 1 : 0));
 
-  const cardFavorClickHandler = (cardId, cardStatus) => {
-    const newStatus = cardStatus ? 0 : 1;
-    toggleFavoriteOnClick(cardId, newStatus);
-    toggleOpenedCardFavorite();
   };
 
+  const {
+    isPremium,
+    price,
+    type,
+    rating,
+    description,
+    bedrooms,
+    maxAdults,
+    goods,
+    images,
+    title,
+    host
+  } = offer;
+
+  const classFavorite = isFavorite ?
+    `property__bookmark-button property__bookmark-button--active button` :
+    `property__bookmark-button button`;
+
+  const hostClassName = `property__avatar-wrapper ${host.isPro && `property__avatar-wrapper--pro`} user__avatar-wrapper`;
   return (
     <div className="page">
-      <Header />
+
+      <Header userName={`Oliver.conner@gmail.com`}/>
+
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
-            <OfferPropertyGallery images={images} />
+            <PropertyGallery images={images} />
           </div>
-
           <div className="property__container container">
             <div className="property__wrapper">
               {isPremium && (
                 <div className="property__mark">
                   <span>Premium</span>
-                </div>
-              )}
+                </div>)
+              }
               <div className="property__name-wrapper">
-                <h1 className="property__name">{title}</h1>
+                <h1 className="property__name">
+                  {title}
+                </h1>
                 <button
-                  className={classNames(`property__bookmark-button button`, {
-                    "property__bookmark-button--active": isFavorite,
-                  })}
+                  className={classFavorite}
                   type="button"
-                  onClick={() =>
-                    cardFavorClickHandler(
-                        id,
-                        isFavorite ? `property__bookmark-button--active` : ``
-                    )
-                  }
+                  onClick={handleBookmarkClick}
                 >
-                  <svg
-                    className="property__bookmark-icon"
-                    width={31}
-                    height={33}
-                  >
-                    <use xlinkHref="#icon-bookmark" />
+                  <svg className="property__bookmark-icon" width="31" height="33">
+                    <use xlinkHref="#icon-bookmark"/>
                   </svg>
-                  <span className="visually-hidden">
-                    {isFavorite ? `In bookmarks` : `To bookmarks`}
-                  </span>
+                  <span className="visually-hidden">To bookmarks</span>
                 </button>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: `${(rating / MAX_RATING) * 100}%`}} />
+                  <span style={{width: makeRatingScore(rating) + `%`}}/>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">
-                  {rating}
-                </span>
+                <span className="property__rating-value rating__value">{rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {Housing[type]}
+                  {type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {bedrooms} Bedrooms
@@ -133,160 +103,55 @@ const OfferPage = ({
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">€{price}</b>
+                <b className="property__price-value">&euro;{price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {goods.map((service, index) => (
-                    <li className="property__inside-item" key={index}>
-                      {service}
-                    </li>
+                  {goods.map((good, goodId) => (
+                    <li key={goodId} className="property__inside-item">{good}</li>
                   ))}
                 </ul>
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div
-                    className={classNames(
-                        `property__avatar-wrapper`,
-                        `user__avatar-wrapper`,
-                        {
-                          "property__avatar-wrapper--pro": isPro,
-                        }
-                    )}
-                  >
-                    <img
-                      className="property__avatar user__avatar"
-                      src={avatarUrl}
-                      width={74}
-                      height={74}
-                      alt="Host avatar"
-                    />
+                  <div className={hostClassName}>
+                    <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74"
+                      alt="Host avatar"/>
                   </div>
-                  <span className="property__user-name">{name}</span>
+                  <span className="property__user-name">
+                    {host.name}
+                  </span>
                 </div>
                 <div className="property__description">
-                  {description.map((text, index) => (
-                    <p className="property__text" key={index}>
-                      {text}
-                    </p>
-                  ))}
+                  <p className="property__text">
+                    {description}
+                  </p>
                 </div>
               </div>
-
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">
-                  Reviews ·{` `}
-                  <span className="reviews__amount">{reviews.data.length}</span>
-                </h2>
-                {reviews.data ? (
-                  <ReviewsList reviews={reviews.data} />
-                ) : (
-                  <LoadingScreen />
-                )}
-
-                {status === AuthorizationStatus.AUTH && (
-                  <ReviewsForm
-                    openedOffer={openedOffer}
-                    submitCommentOnServer={submitCommentOnServer}
-                  />
-                )}
-              </section>
+              <Reviews reviews={comments} />
             </div>
           </div>
-          <section className="property__map map">
-            {/* {nearOffers.data ? (
-              <Map offers={nearOffers.data} city={city} />
-            ) : (
-              <LoadingScreen />
-            )} */}
-          </section>
+          <Map offers={offersNearby} mapType={MapType.NEAR}/>
         </section>
-        {nearOffers.data ? (
-          <div className="container">
-            <section className="near-places places">
-              <h2 className="near-places__title">
-                Other places in the neighbourhood
-              </h2>
-              <PlacesList pageType="offer" offers={nearOffers.data} />
-            </section>
-          </div>
-        ) : (
-          <LoadingScreen />
-        )}
+        <div className="container">
+          <section className="near-places places">
+            <h2 className="near-places__title">Other places in the neighbourhood</h2>
+            <PlaceList offers={offersNearby} placeListType={PlaceListType.NEAR} />
+          </section>
+        </div>
       </main>
     </div>
   );
 };
 
 OfferPage.propTypes = {
-  status: PropTypes.string.isRequired,
-  reviews: PropTypes.object,
-  openedOffer: PropTypes.shape({
-    "bedrooms": PropTypes.number,
-    "city": PropTypes.shape({
-      "location": PropTypes.objectOf(PropTypes.number),
-      "name": PropTypes.string
-    }),
-    "description": PropTypes.string,
-    "goods": PropTypes.arrayOf(PropTypes.string),
-    "host": PropTypes.shape({
-      "avatar_url": PropTypes.string,
-      "id": PropTypes.number.isRequired,
-      "is_pro": PropTypes.bool,
-      "name": PropTypes.string
-    }),
-    "id": PropTypes.number.isRequired,
-    "images": PropTypes.arrayOf(PropTypes.string),
-    "is_favorite": PropTypes.bool,
-    "is_premium": PropTypes.bool,
-    "location": PropTypes.objectOf(PropTypes.number),
-    "max_adults": PropTypes.number,
-    "preview_image": PropTypes.string,
-    "price": PropTypes.number,
-    "rating": PropTypes.number,
-    "title": PropTypes.string,
-    "type": PropTypes.string
-  }),
-  submitCommentOnServer: PropTypes.func.isRequired,
-  nearOffers: PropTypes.object.isRequired,
-  loadOffer: PropTypes.func.isRequired,
-  loadNearOffersSuccess: PropTypes.func.isRequired,
-  loadReviews: PropTypes.func.isRequired,
-  toggleFavoriteOnClick: PropTypes.func.isRequired,
-  toggleOpenedCardFavorite: PropTypes.func.isRequired,
+  offer: propTypesPlace.isRequired,
+  comments: PropTypes.arrayOf(propTypesReview).isRequired,
+  offersNearby: PropTypes.arrayOf(propTypesPlace).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  status: state.user.status,
-  openedOffer: state.openedOffer,
-  nearOffers: state.nearOffers,
-  reviews: state.reviews,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  submitCommentOnServer(id, review) {
-    dispatch(submitComment(id, review));
-  },
-  loadOffer(id) {
-    dispatch(fetchOffer(id));
-  },
-  loadNearOffersSuccess(id) {
-    dispatch(fetchNearOffers(id));
-  },
-  loadReviews(id) {
-    dispatch(fetchReviews(id));
-  },
-  toggleFavoriteOnClick(id, status) {
-    dispatch(toggleFavorite(id, status));
-  },
-  toggleOpenedCardFavorite() {
-    dispatch(ActionCreator.toggleOpenedCardFavorite());
-  },
-});
-
 export {OfferPage};
-export default connect(mapStateToProps, mapDispatchToProps)(OfferPage);
+export default withSpinner(OfferPage);
