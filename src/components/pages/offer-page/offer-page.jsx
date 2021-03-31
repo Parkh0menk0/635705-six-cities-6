@@ -20,7 +20,7 @@ const OfferPage = ({offer, comments, offersNearby}) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [isFavorite, setIsFavorite] = useState(offer.isFavorite);
+  const [isFavorite, setIsFavorite] = useState(offer[`is_favorite`]);
 
   const handleBookmarkClick = () => {
     if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
@@ -34,13 +34,13 @@ const OfferPage = ({offer, comments, offersNearby}) => {
   };
 
   const {
-    isPremium,
+    "is_premium": isPremium,
     price,
     type,
     rating,
     description,
     bedrooms,
-    maxAdults,
+    "max_adults": maxAdults,
     goods,
     images,
     title,
@@ -51,7 +51,7 @@ const OfferPage = ({offer, comments, offersNearby}) => {
     `property__bookmark-button property__bookmark-button--active button` :
     `property__bookmark-button button`;
 
-  const hostClassName = `property__avatar-wrapper ${host.isPro && `property__avatar-wrapper--pro`} user__avatar-wrapper`;
+  const hostClassName = `property__avatar-wrapper ${host[`is_pro`] && `property__avatar-wrapper--pro`} user__avatar-wrapper`;
   return (
     <div className="page">
 
@@ -118,7 +118,7 @@ const OfferPage = ({offer, comments, offersNearby}) => {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className={hostClassName}>
-                    <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74"
+                    <img className="property__avatar user__avatar" src={host[`avatar_url`]} width="74" height="74"
                       alt="Host avatar"/>
                   </div>
                   <span className="property__user-name">

@@ -1,6 +1,4 @@
 import {createAction} from "@reduxjs/toolkit";
-import {adaptOfferToClient} from "src/utils/place";
-import {adaptReviewToClient} from "src/utils/review";
 
 export const ActionType = {
   LOAD_OFFERS: `data/loadOffers`,
@@ -43,25 +41,25 @@ export const setActiveOffer = createAction(ActionType.SET_ACTIVE_OFFER, (id) => 
 
 export const loadOffers = createAction(ActionType.LOAD_OFFERS, (offers) => {
   return {
-    payload: offers.map((item) => adaptOfferToClient(item))
+    payload: offers
   };
 });
 
 export const loadOffer = createAction(ActionType.LOAD_OFFER, (offer) => {
   return {
-    payload: adaptOfferToClient(offer)
+    payload: offer
   };
 });
 
 export const loadComments = createAction(ActionType.LOAD_COMMENTS, (comments) => {
   return {
-    payload: comments.map((item) => adaptReviewToClient(item))
+    payload: comments
   };
 });
 
 export const loadOffersNearby = createAction(ActionType.LOAD_OFFERS_NEARBY, (offers) => {
   return {
-    payload: offers.map((item) => adaptOfferToClient(item))
+    payload: offers
   };
 });
 
@@ -103,7 +101,7 @@ export const setOfferLoading = createAction(ActionType.SET_OFFER_LOADIGN, (isOff
 
 export const loadFavorite = createAction(ActionType.LOAD_FAVORITE, (favorite) => {
   return {
-    payload: favorite.map((item) => adaptOfferToClient(item))
+    payload: favorite
   };
 });
 

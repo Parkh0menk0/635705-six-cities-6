@@ -15,12 +15,12 @@ const Place = ({offer, cardType, setActive, unsetActive}) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [isFavorite, setIsFavorite] = useState(offer.isFavorite);
+  const [isFavorite, setIsFavorite] = useState(offer[`is_favorite`]);
 
   const {
     id,
-    isPremium,
-    previewImage,
+    "is_premium": isPremium,
+    "preview_image": previewImage,
     price,
     type,
     rating,

@@ -51,36 +51,6 @@ export const MAP_SETTINGS = {
   }
 };
 
-export const adaptOfferToClient = (place) => {
-  const adaptedPlace = Object.assign(
-      {},
-      place,
-      {
-        isFavorite: place.is_favorite,
-        isPremium: place.is_premium,
-        maxAdults: place.max_adults,
-        previewImage: place.preview_image,
-        host: Object.assign(
-            {},
-            place.host,
-            {
-              avatarUrl: place.host.avatar_url,
-              isPro: place.host.is_pro
-            }
-        )
-      }
-  );
-
-  delete adaptedPlace.is_favorite;
-  delete adaptedPlace.is_premium;
-  delete adaptedPlace.max_adults;
-  delete adaptedPlace.preview_image;
-  delete adaptedPlace.host.avatar_url;
-  delete adaptedPlace.host.is_pro;
-
-  return adaptedPlace;
-};
-
 export const adaptOfferToServer = (place) => {
   const adaptedPlace = Object.assign(
       {},
@@ -121,22 +91,22 @@ export const propTypesPlace = PropTypes.shape({
   "description": PropTypes.string.isRequired,
   "goods": PropTypes.array.isRequired,
   "host": PropTypes.shape({
-    "avatarUrl": PropTypes.string.isRequired,
+    "avatar_url": PropTypes.string.isRequired,
     "id": PropTypes.number.isRequired,
-    "isPro": PropTypes.bool.isRequired,
+    "is_pro": PropTypes.bool.isRequired,
     "name": PropTypes.string.isRequired,
   }),
   "id": PropTypes.number.isRequired,
   "images": PropTypes.array.isRequired,
-  "isFavorite": PropTypes.bool.isRequired,
-  "isPremium": PropTypes.bool.isRequired,
+  "is_favorite": PropTypes.bool.isRequired,
+  "is_premium": PropTypes.bool.isRequired,
   "location": PropTypes.shape({
     "latitude": PropTypes.number.isRequired,
     "longitude": PropTypes.number.isRequired,
     "zoom": PropTypes.number.isRequired,
   }),
-  "maxAdults": PropTypes.number.isRequired,
-  "previewImage": PropTypes.string.isRequired,
+  "max_adults": PropTypes.number.isRequired,
+  "preview_image": PropTypes.string.isRequired,
   "price": PropTypes.number.isRequired,
   "rating": PropTypes.number.isRequired,
   "title": PropTypes.string.isRequired,
