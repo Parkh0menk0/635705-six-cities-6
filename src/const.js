@@ -1,112 +1,112 @@
+export const CITIES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];
+export const PLACE_TYPE = [`apartment`, `room`, `house`, `hotel`];
+export const SORT_TYPES = [`Popular`, `Price: low to high`, `Price: high to low`, `Top rated first`];
 export const MAX_RATING = 5;
+export const RATINIG_INIT = 0;
+export const REVIEW_LENGTH_MIN = 50;
+export const REVIEW_LENGTH_MAX = 300;
+export const VISIBLE_OFFERS_NEARBY_COUNT = 3;
 
-export const SORT_LIST = [
-  {
-    id: `default`,
-    title: `Popular`,
-  },
-  {
-    id: `price-from-low`,
-    title: `Price: low to high`,
-  },
-  {
-    id: `price-from-high`,
-    title: `Price: high to low`,
-  },
-  {
-    id: `price-top-rated`,
-    title: `Top rated first`,
-  },
-];
 
-export const ImageSize = {
-  LARGE: {
-    width: 260,
-    height: 200,
-  },
-  SMALL: {
-    width: 150,
-    height: 110,
-  },
+export const SortTypes = {
+  POPULAR: `Popular`,
+  PRICE_INC: `Price: low to high`,
+  PRICE_DEC: `Price: high to low`,
+  TOP: `Top rated first`
 };
 
-export const Housing = {
-  apartment: `Apartment`,
-  room: `Private Room`,
-  house: `House`,
-  hotel: `Hotel`,
+export const CardType = {
+  CITIES: `cities`,
+  FAVORITES: `favorites`,
+  NEAR: `near`
 };
 
-export const CITIES = [
-  {
-    "location": {
-      "latitude": 48.86268,
-      "longitude": 2.33779,
-      "zoom": 10,
-    },
-    "name": `Paris`,
-  },
-  {
-    "location": {
-      "latitude": 52.370216,
-      "longitude": 4.895168,
-      "zoom": 10,
-    },
-    "name": `Cologne`,
-  },
-  {
-    "location": {
-      "latitude": 50.84889,
-      "longitude": 4.35136,
-      "zoom": 10,
-    },
-    "name": `Brussels`,
-  },
-  {
-    "location": {
-      "latitude": 52.370216,
-      "longitude": 4.895168,
-      "zoom": 10,
-    },
-    "name": `Amsterdam`,
-  },
-  {
-    "location": {
-      "latitude": 53.55849,
-      "longitude": 9.787741,
-      "zoom": 10,
-    },
-    "name": `Hamburg`,
-  },
-  {
-    "location": {
-      "latitude": 51.238371,
-      "longitude": 6.674269,
-      "zoom": 10,
-    },
-    "name": `Dusseldorf`,
-  }
-];
+export const PlaceListType = {
+  CITIES: `cities`,
+  NEAR: `near`
+};
 
-export const mapTypes = {
-  MAIN: `MAIN`,
-  PROPERTY: `PROPERTY`,
+export const MapType = {
+  CITIES: `cities`,
+  NEAR: `near`,
+};
+export const RatingMap = {
+  1: `terribly`,
+  2: `badly`,
+  3: `not bad`,
+  4: `good`,
+  5: `perfect`,
+};
+
+export const INITIAL_LOCATION = `Paris`;
+
+export const CitiesMap = {
+  Amsterdam: [52.3833, 4.9044],
+  Paris: [48.8589, 2.3469],
+  Cologne: [50.9593, 6.9695],
+  Brussels: [50.8552, 4.3753],
+  Hamburg: [53.5503, 10.0006],
+  Dusseldorf: [51.2387, 6.8143]
 };
 
 export const AppRoute = {
-  MAIN: `/`,
   LOGIN: `/login`,
+  MAIN: `/`,
   FAVORITES: `/favorites`,
   ROOM: `/offer/:id`,
-  NOT_FOUND: `/404`,
+  PAGE_NOT_FOUND: `/page-not-found`
 };
 
-export const APIRoutes = {
+export const APIRoute = {
   OFFERS: `/hotels`,
-  OFFER: `/hotels/:id`,
-  OFFERS_NEARBY: `/hotels/:hotel_id/nearby`,
-  FAVORITES: `/favorite`,
-  REVIEWS: `/comments`,
   LOGIN: `/login`,
   LOGOUT: `/logout`,
+  OFFER: `/hotels/:id`,
+  COMMENTS: `/comments/:id`,
+  NEARBY: `/hotels/:id/nearby`,
+  FAVORITE: `/favorite`,
+  FAVORITE_ITEM: `/favorite/:hotel_id/:status`
+};
+
+export const EMPTY_OFFER = {
+  "city": {
+    "name": `Paris`,
+    "location": {
+      "latitude": 0,
+      "longitude": 0,
+      "zoom": 0
+    }
+  },
+  "preview_image": ``,
+  "images": [],
+  "title": ``,
+  "is_favorite": false,
+  "is_premium": false,
+  "rating": 0,
+  "type": `room`,
+  "bedrooms": 0,
+  "max_adults": 0,
+  "price": 0,
+  "goods": [],
+  "host": {
+    "id": 0,
+    "name": ``,
+    "is_pro": false,
+    "avatar_url": ``
+  },
+  "description": ``,
+  "location": {
+    "latitude": 0,
+    "longitude": 0,
+    "zoom": 0
+  },
+  "id": 0
+};
+
+export const EMPTY_USER = {
+  "avatar_url": ``,
+  "email": ``,
+  "id": 1,
+  "is_pro": false,
+  "name": ``
 };

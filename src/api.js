@@ -37,14 +37,3 @@ export const createAPI = (onUnauthorized) => {
 
   return api;
 };
-
-export const notExisteOffer = (err, notFound) => {
-  const {response} = err;
-
-  if (response.status === HttpCode.NOT_FOUND) {
-    notFound();
-    throw err;
-  }
-
-  throw err;
-};

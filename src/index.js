@@ -1,69 +1,36 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {createStore, applyMiddleware} from "redux";
+import {configureStore} from "@reduxjs/toolkit";
+import {createAPI} from "src/api";
 import {Provider} from "react-redux";
-import {composeWithDevTools} from "redux-devtools-extension";
-import thunk from "redux-thunk";
-
 import App from "./components/app/app";
-import {reducer} from "./store/reducer";
-import {CITIES, SORT_LIST} from "./const";
-import {ActionCreator} from "./store/action";
-import {checkAuth} from "./store/api-actions";
-import {createAPI, AuthorizationStatus} from "./api";
-import {redirect} from "src/store/middlewares/redirect";
+import rootReducer from "./store/root-reducer";
+import {AuthorizationStatus} from "src/api";
+import {requireAuthorization} from "src/store/action";
+import {checkAuth} from "src/store/api-actions";
+import {redirect} from "./store/middlewares/redirect";
+import Error from "./components/error/error";
 
-const preloadedState = {
-  city: CITIES[0],
-  sortOption: SORT_LIST[0],
-  activeOfferId: null,
-  offers: {
-    data: null,
-    loading: false,
-    error: null,
-  },
-  user: {
-    status: AuthorizationStatus.NO_AUTH,
-    data: null,
-  },
-  openedOffer: null,
-  nearOffers: {
-    data: null,
-    loading: false,
-    error: null,
-  },
-  reviews: {
-    data: null,
-    loading: false,
-    error: null,
-  },
-  favoriteOffers: {
-    data: null,
-    loading: false,
-    error: null,
-  },
-};
-
-const api = createAPI(() =>
-  store.dispatch(
-      ActionCreator.authorizationFailured()
-  )
+const api = createAPI(
+    () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
 );
 
-const store = createStore(
-    reducer,
-    preloadedState,
-    composeWithDevTools(
-        applyMiddleware(thunk.withExtraArgument(api)),
-        applyMiddleware(redirect)
-    )
-);
-
-store.dispatch(checkAuth()).then(() => {
-  ReactDOM.render(
-      <Provider store={store}>
-        <App />
-      </Provider>,
-      document.querySelector(`#root`)
-  );
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api
+      }
+    }).concat(redirect)
 });
+
+store.dispatch(checkAuth());
+
+ReactDOM.render(
+    <Provider store={store}>
+      <Error />
+      <App />
+    </Provider>,
+    document.querySelector(`#root`)
+);

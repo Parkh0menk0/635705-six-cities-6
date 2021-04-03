@@ -1,33 +1,72 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import {useHistory} from 'react-router-dom';
+import React, {useRef} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {Link} from "react-router-dom";
 import Header from "src/components/layout/header/header";
-import AuthorizationForm from "src/components/authorization/form";
-import {AuthorizationStatus} from "src/api";
+import {login} from "src/store/api-actions";
+import {AppRoute} from "src/const";
 
-const LoginPage = ({user}) => {
+const LoginPage = () => {
+  const locationCity = useSelector((state) => state.DATA.locationCity);
+  const dispatch = useDispatch();
 
-  const history = useHistory();
+  const loginRef = useRef();
+  const passwordRef = useRef();
 
-  if (user.status === AuthorizationStatus.AUTH) {
-    history.push(`/`);
-  }
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    dispatch(login({
+      login: loginRef.current.value,
+      password: passwordRef.current.value,
+    })
+    );
+  };
 
   return (
     <div className="page page--gray page--login">
+
       <Header />
+
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <AuthorizationForm />
+            <form
+              className="login__form form"
+              action=""
+              onSubmit={handleSubmit}
+            >
+              <div className="login__input-wrapper form__input-wrapper">
+                <label className="visually-hidden" htmlFor="email">E-mail</label>
+                <input
+                  ref={loginRef}
+                  className="login__input form__input"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  required
+                  id="email"
+                />
+              </div>
+              <div className="login__input-wrapper form__input-wrapper">
+                <label className="visually-hidden" htmlFor="password">Password</label>
+                <input
+                  ref={passwordRef}
+                  className="login__input form__input"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <button className="login__submit form__submit button" type="submit">Sign in</button>
+            </form>
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link to={AppRoute.MAIN} className="locations__item-link" href="#">
+                <span>{locationCity}</span>
+              </Link>
             </div>
           </section>
         </div>
@@ -36,19 +75,5 @@ const LoginPage = ({user}) => {
   );
 };
 
-LoginPage.propTypes = {
-  user: PropTypes.shape({
-    status: PropTypes.string,
-    data: PropTypes.shape({
-      email: PropTypes.string,
-      password: PropTypes.string,
-    }),
-  }),
-};
+export default LoginPage;
 
-const mapStateToProps = (state) => ({
-  offers: state.offers,
-});
-
-export {LoginPage};
-export default connect(mapStateToProps)(LoginPage);

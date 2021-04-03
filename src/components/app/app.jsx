@@ -1,30 +1,43 @@
 import React from "react";
-import PropTypes from "prop-types";
+import {useSelector} from "react-redux";
 import {Switch, Route, Router as BrowserRouter} from "react-router-dom";
 import browserHistory from "src/browser-history";
-import MainPage from "src/components/pages/main-page/main-page";
-import FavoritesPage from "src/components/pages/favorites-page/favorites-page";
+import MainPageWrapper from "src/components/pages/main-page-wrapper/main-page-wrapper";
+import FavoritesPageWrapper from "src/components/pages/favorites-page-wrapper/favorites-page-wrapper";
 import LoginPage from "src/components/pages/login-page/login-page";
-import OfferPage from "src/components/pages/offer-page/offer-page";
+import OfferPageWrapper from "src/components/pages/offer-page-wrapper/offer-page-wrapper";
 import NotFoundPage from "src/components/pages/not-found-page/not-found-page";
 import {AppRoute} from "src/const";
-import PrivateRoute from "src/components/private-route/private-route";
+import withPrivateRoute from "src/hocs/with-private-route/with-private-route";
+import {AuthorizationStatus} from "src/api";
 
 const App = () => {
+  const authorizationStatus = useSelector((state) => state.USER.authorizationStatus);
+
+  const SignInPagePrivate = withPrivateRoute(
+      LoginPage,
+      authorizationStatus === AuthorizationStatus.NO_AUTH
+  );
+  const FavoritePrivate = withPrivateRoute(
+      FavoritesPageWrapper,
+      authorizationStatus === AuthorizationStatus.AUTH,
+      AppRoute.LOGIN
+  );
+
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
         <Route path={AppRoute.MAIN} exact>
-          <MainPage />
+          <MainPageWrapper />
         </Route>
         <Route path={AppRoute.LOGIN} exact>
-          <LoginPage />
+          <SignInPagePrivate />
         </Route>
-        <PrivateRoute path={AppRoute.FAVORITES} exact>
-          <FavoritesPage />
-        </PrivateRoute>
+        <Route path={AppRoute.FAVORITES} exact>
+          <FavoritePrivate />
+        </Route>
         <Route path={AppRoute.ROOM} exact>
-          <OfferPage />
+          <OfferPageWrapper />;
         </Route>
         <Route>
           <NotFoundPage />
@@ -32,11 +45,6 @@ const App = () => {
       </Switch>
     </BrowserRouter>
   );
-};
-
-App.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.object),
-  reviews: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default App;
