@@ -6,6 +6,7 @@ import {
   loadComments,
   loadOffersNearby,
   requireAuthorization,
+  authorizationFailured,
   loadFavorite,
   setFavoriteLoading,
   setUser
@@ -42,7 +43,7 @@ export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
     .then(({data}) => dispatch(setUser(data)))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-    .catch(() => {})
+    .catch(() => dispatch(authorizationFailured()))
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (

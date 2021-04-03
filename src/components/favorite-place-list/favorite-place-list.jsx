@@ -34,8 +34,6 @@ const FavoritePlaceList = ({offers}) => {
                 key={offer.id}
                 cardType={CardType.FAVORITES}
                 offer={offer}
-                setActive={() => {}}
-                unsetActive={() => {}}
               />
             )}
           </div>

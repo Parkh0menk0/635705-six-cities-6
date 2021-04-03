@@ -18,6 +18,7 @@ export const ActionType = {
   SET_ACTIVE_OFFER: `app/setActiveOffer`,
 
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  AUTHORIZATION_FAILURED: `user/authorizationFailured`,
   SET_USER: `user/setUser`
 };
 
@@ -66,6 +67,12 @@ export const loadOffersNearby = createAction(ActionType.LOAD_OFFERS_NEARBY, (off
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => {
   return {
     payload: status
+  };
+});
+
+export const authorizationFailured = createAction(ActionType.AUTHORIZATION_FAILURED, (error) => {
+  return {
+    payload: error
   };
 });
 
