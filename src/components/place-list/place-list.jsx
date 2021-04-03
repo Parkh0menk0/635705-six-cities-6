@@ -24,8 +24,8 @@ const PlaceList = ({offers, placeListType}) => {
           cardType={PLACE_LIST_SETTINGS[placeListType].cardType}
           offer={offer}
           key={offer.id}
-          setActive={handleSetActive}
-          unsetActive={handleUnsetActive}
+          onMouseEnter={handleSetActive}
+          onMouseLeave={handleUnsetActive}
         />
       ))}
     </div>

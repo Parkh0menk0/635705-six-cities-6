@@ -10,7 +10,7 @@ import {AppRoute} from "src/const";
 import {AuthorizationStatus} from "src/api";
 
 
-const Place = ({offer, cardType, setActive, unsetActive}) => {
+const Place = ({offer, cardType, onMouseEnter, onMouseLeave}) => {
   const authorizationStatus = useSelector((state) => state.USER.authorizationStatus);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -31,8 +31,8 @@ const Place = ({offer, cardType, setActive, unsetActive}) => {
     `place-card__bookmark-button place-card__bookmark-button--active button` :
     `place-card__bookmark-button button`;
 
-  const handleMouseEnter = () => setActive(offer.id);
-  const handleMouseLeave = () => unsetActive();
+  const handleMouseEnter = () => onMouseEnter(offer.id);
+  const handleMouseLeave = () => onMouseLeave();
 
   const handleBookmarkClick = () => {
     if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
@@ -102,8 +102,8 @@ const Place = ({offer, cardType, setActive, unsetActive}) => {
 Place.propTypes = {
   offer: propTypesPlace,
   cardType: PropTypes.string.isRequired,
-  setActive: PropTypes.func.isRequired,
-  unsetActive: PropTypes.func.isRequired
+  onMouseEnter: PropTypes.func.isRequired,
+  onMouseLeave: PropTypes.func.isRequired
 };
 
 export default Place;
