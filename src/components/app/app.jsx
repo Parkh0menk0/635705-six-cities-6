@@ -1,7 +1,6 @@
 import React from "react";
 import {useSelector} from "react-redux";
-import {Switch, Route, Router as BrowserRouter} from "react-router-dom";
-import browserHistory from "src/browser-history";
+import {Switch, Route} from "react-router-dom";
 import MainPageWrapper from "src/components/pages/main-page-wrapper/main-page-wrapper";
 import FavoritesPageWrapper from "src/components/pages/favorites-page-wrapper/favorites-page-wrapper";
 import LoginPage from "src/components/pages/login-page/login-page";
@@ -25,25 +24,23 @@ const App = () => {
   );
 
   return (
-    <BrowserRouter history={browserHistory}>
-      <Switch>
-        <Route path={AppRoute.MAIN} exact>
-          <MainPageWrapper />
-        </Route>
-        <Route path={AppRoute.LOGIN} exact>
-          <SignInPagePrivate />
-        </Route>
-        <Route path={AppRoute.FAVORITES} exact>
-          <FavoritePrivate />
-        </Route>
-        <Route path={AppRoute.ROOM} exact>
-          <OfferPageWrapper />;
-        </Route>
-        <Route>
-          <NotFoundPage />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Route path={AppRoute.MAIN} exact>
+        <MainPageWrapper />
+      </Route>
+      <Route path={AppRoute.LOGIN} exact>
+        <SignInPagePrivate />
+      </Route>
+      <Route path={AppRoute.FAVORITES} exact>
+        <FavoritePrivate />
+      </Route>
+      <Route path={AppRoute.ROOM} exact>
+        <OfferPageWrapper />;
+      </Route>
+      <Route>
+        <NotFoundPage />
+      </Route>
+    </Switch>
   );
 };
 

@@ -55,7 +55,7 @@ const OfferPage = ({offer, comments, offersNearby}) => {
   return (
     <div className="page">
 
-      <Header userName={`Oliver.conner@gmail.com`}/>
+      <Header />
 
       <main className="page__main page__main--property">
         <section className="property">

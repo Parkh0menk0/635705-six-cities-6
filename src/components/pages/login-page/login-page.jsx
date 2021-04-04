@@ -6,7 +6,7 @@ import {login} from "src/store/api-actions";
 import {AppRoute} from "src/const";
 
 const LoginPage = () => {
-  const locationCity = useSelector((state) => state.DATA.locationCity);
+  const locationCity = useSelector((state) => state.APP.locationCity);
   const dispatch = useDispatch();
 
   const loginRef = useRef();
@@ -46,6 +46,7 @@ const LoginPage = () => {
                   placeholder="Email"
                   required
                   id="email"
+                  data-testid="email"
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -57,6 +58,8 @@ const LoginPage = () => {
                   name="password"
                   placeholder="Password"
                   required
+                  id="password"
+                  data-testid="password"
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
