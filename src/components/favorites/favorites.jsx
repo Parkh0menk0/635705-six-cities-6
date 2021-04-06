@@ -1,9 +1,9 @@
 import React from "react";
-import FavoritePlaceList from "src/components/favorite-place-list/favorite-place-list";
+import FavoritePlaceList from "../favorite-place-list/favorite-place-list";
 import PropTypes from "prop-types";
-import {propTypesPlace} from "src/utils/place";
-import Header from "src/components/layout/header/header";
-import Footer from "src/components/layout/footer/footer";
+import {propTypesPlace} from "../../utils/place";
+import Header from "../layout/header/header";
+import Footer from "../layout/footer/footer";
 
 const Favorites = ({offers}) => {
   return (

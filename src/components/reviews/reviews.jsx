@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {propTypesReview} from "src/utils/review";
-import ReviewsForm from "src/components/reviews-form/reviews-form";
-import Review from "src/components/review/review";
+import {propTypesReview} from "../../utils/review";
+import ReviewsForm from "../reviews-form/reviews-form";
+import Review from "../review/review";
 
 const Reviews = ({reviews}) => {
   return (

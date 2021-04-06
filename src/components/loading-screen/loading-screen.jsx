@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 const LoadingScreen = () => {
   return (
-    <p>Loading...</p>
+    <p>Loading ...</p>
   );
 };
 

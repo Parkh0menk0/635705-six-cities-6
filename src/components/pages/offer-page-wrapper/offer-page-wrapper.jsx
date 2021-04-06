@@ -1,25 +1,30 @@
 import React, {useEffect} from "react";
-import OfferPage from "src/components/pages/offer-page/offer-page";
-import {fetchComments, fetchOffer, fetchNearOffers} from "src/store/api-actions";
+import OfferPage from "../offer-page/offer-page";
+import {fetchComments, fetchOffer, fetchNearOffers} from "../../../store/api-actions";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
-import {getOffersNearbyVisible} from "src/store/data/selectors";
+import {getCommentsVisible, getOffersNearbyVisible} from "../../../store/data/selectors";
 
 const OfferPageWrapper = () => {
   const {id} = useParams();
 
   const offer = useSelector((state) => state.DATA.offer);
   const isOfferLoading = useSelector((state) => state.DATA.isOfferLoading);
-  const comments = useSelector((state) => state.DATA.comments);
+  const comments = useSelector(getCommentsVisible);
   const offersNearby = useSelector(getOffersNearbyVisible);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchOffer(id));
-    dispatch(fetchComments(id));
-    dispatch(fetchNearOffers(id));
-  }, []);
+  }, [id]);
 
+  useEffect(() => {
+    dispatch(fetchComments(id));
+  }, [id], comments);
+
+  useEffect(() => {
+    dispatch(fetchNearOffers(id));
+  }, [id]);
 
   return (
     <OfferPage

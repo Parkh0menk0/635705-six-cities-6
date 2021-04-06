@@ -1,6 +1,6 @@
 import React from "react";
 import {useHistory} from "react-router-dom";
-import {AppRoute} from "src/const";
+import {AppRoute} from "../../../const";
 
 const Footer = () => {
   const history = useHistory();

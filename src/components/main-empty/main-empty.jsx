@@ -1,7 +1,7 @@
 import React from "react";
-import LocationList from "src/components/location-list/location-list";
+import LocationList from "../location-list/location-list";
 import PropTypes from "prop-types";
-import {CITIES} from "src/const";
+import {CITIES} from "../../const";
 
 const MainEmpty = ({locations, locationCity}) => {
   return (

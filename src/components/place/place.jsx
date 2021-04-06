@@ -1,13 +1,12 @@
 import React, {useState} from "react";
 import {Link, useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
-import {makeRatingScore, propTypesPlace} from "src/utils/place";
-import {capitalize} from "src/utils/common";
-import {PLACE_SETTINGS} from "src/utils/place";
+import {makeRatingScore, propTypesPlace} from "../../utils/place";
+import {capitalize} from "../../utils/common";
+import {PLACE_SETTINGS} from "../../utils/place";
 import {useDispatch, useSelector} from "react-redux";
-import {setFavoriteStatus} from "src/store/api-actions";
-import {AppRoute} from "src/const";
-import {AuthorizationStatus} from "src/api";
+import {setFavoriteStatus} from "../../store/api-actions";
+import {AppRoute, AuthorizationStatus} from "../../const";
 
 
 const Place = ({offer, cardType, onMouseEnter, onMouseLeave}) => {

@@ -1,11 +1,11 @@
 import React from "react";
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
-import Header from "src/components/layout/header/header";
-import {getFilteredSortedOffers} from "src/store/data/selectors";
-import Main from "src/components/main/main";
-import MainEmpty from "src/components/main-empty/main-empty";
-import withSpinner from "src/hocs/with-spinner/with-spinner";
+import Header from "../../layout/header/header";
+import {getFilteredSortedOffers} from "../../../store/data/selectors";
+import Main from "../../main/main";
+import MainEmpty from "../../main-empty/main-empty";
+import withSpinner from "../../../hocs/with-spinner/with-spinner";
 
 
 const MainPage = ({locations, sortTypes}) => {

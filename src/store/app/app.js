@@ -1,6 +1,6 @@
 import {createReducer} from "@reduxjs/toolkit";
-import {changeLocation, changeSortType, setActiveOffer, setErrorMessage, unsetErrorMessage} from "src/store/action";
-import {INITIAL_LOCATION, SortTypes} from "src/const";
+import {changeLocation, changeSortType, setActiveOffer, setErrorMessage, unsetErrorMessage} from "../action";
+import {INITIAL_LOCATION, SortTypes} from "../../const";
 
 const initialState = {
   locationCity: INITIAL_LOCATION,

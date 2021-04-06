@@ -1,6 +1,6 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {unsetErrorMessage} from "src/store/action";
+import {unsetErrorMessage} from "../../store/action";
 
 const alertStyle = {
   position: `fixed`,

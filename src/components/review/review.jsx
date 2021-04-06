@@ -1,6 +1,6 @@
 import React from "react";
-import {propTypesReview, getDate} from "src/utils/review";
-import {makeRatingScore} from "src/utils/place";
+import {propTypesReview, getDate} from "../../utils/review";
+import {makeRatingScore} from "../../utils/place";
 
 const Review = ({review}) => {
   const {user, rating, comment, date} = review;

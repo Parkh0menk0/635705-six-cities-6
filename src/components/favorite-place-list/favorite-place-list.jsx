@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {groupByLocation, propTypesPlace} from "src/utils/place";
-import Place from "src/components/place/place";
-import {CardType} from "src/const";
+import {groupByLocation, propTypesPlace} from "../../utils/place";
+import Place from "../place/place";
+import {CardType} from "../../const";
 import {useSelector} from "react-redux";
 
 

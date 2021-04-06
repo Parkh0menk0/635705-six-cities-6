@@ -1,11 +1,11 @@
 import React, {useEffect, useRef} from "react";
-import leaflet from 'leaflet';
+import leaflet from "leaflet";
 import PropTypes from "prop-types";
-import {CitiesMap} from "src/const";
-import {MAP_SETTINGS} from "src/utils/place";
+import {CitiesMap} from "../../const";
+import {MAP_SETTINGS} from "../../utils/place";
 import "leaflet/dist/leaflet.css";
 import {useSelector} from "react-redux";
-import {getFilteredOffers} from "src/store/data/selectors";
+import {getFilteredOffers} from "../../store/data/selectors";
 
 const zoom = 12;
 

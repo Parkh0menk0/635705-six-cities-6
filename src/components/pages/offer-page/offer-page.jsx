@@ -1,18 +1,16 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
+import Header from "../../layout/header/header";
+import {makeRatingScore, propTypesPlace} from "../../../utils/place";
+import {propTypesReview} from "../../../utils/review";
+import Reviews from "../../reviews/reviews";
+import PlaceList from "../../place-list/place-list";
+import withSpinner from "../../../hocs/with-spinner/with-spinner";
+import {AppRoute, AuthorizationStatus, MapType, PlaceListType} from "../../../const";
+import Map from "../../map/map";
+import {setFavoriteStatus} from "../../../store/api-actions";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory, useParams} from "react-router-dom";
-import Header from "src/components/layout/header/header";
-import {makeRatingScore, propTypesPlace} from "src/utils/place";
-import {propTypesReview} from "src/utils/review";
-import Reviews from "src/components/reviews/reviews";
-import PropertyGallery from "src/components/offer-gallery/offer-gallery";
-import PlaceList from "src/components/place-list/place-list";
-import withSpinner from "src/hocs/with-spinner/with-spinner";
-import {AppRoute, MapType, PlaceListType} from "src/const";
-import {AuthorizationStatus} from "src/api";
-import Map from "src/components/map/map";
-import {setFavoriteStatus} from "src/store/api-actions";
 
 const OfferPage = ({offer, comments, offersNearby}) => {
   const {id} = useParams();
@@ -55,12 +53,18 @@ const OfferPage = ({offer, comments, offersNearby}) => {
   return (
     <div className="page">
 
-      <Header userName={`Oliver.conner@gmail.com`}/>
+      <Header />
 
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
-            <PropertyGallery images={images} />
+            <div className="property__gallery">
+              {images.map((imageSrc, imageId) => (
+                <div key={imageId} className="property__image-wrapper">
+                  <img className="property__image" src={imageSrc} alt="Photo studio"/>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">

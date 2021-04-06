@@ -1,6 +1,6 @@
 import React from "react";
 import {Redirect} from "react-router-dom";
-import {AppRoute} from "src/const";
+import {AppRoute} from "../../const";
 
 const withPrivateRoute = (Component, isAuth, URL = AppRoute.MAIN) => {
   const WithPrivateRoute = (props) => {

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
-import SortList from "src/components/sort-list/sort-list";
+import SortList from "../sort-list/sort-list";
 
 
 const PlaceSort = ({sortTypes}) => {

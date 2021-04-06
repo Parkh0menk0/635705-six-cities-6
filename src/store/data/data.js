@@ -7,8 +7,8 @@ import {
   loadOffersNearby,
   setFavoriteLoading,
   setOfferLoading
-} from "src/store/action";
-import {EMPTY_OFFER} from "src/const";
+} from "../action";
+import {EMPTY_OFFER} from "../../const";
 
 const initialState = {
   offers: [],
@@ -28,6 +28,7 @@ const data = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadOffer, (state, action) => {
     state.offer = action.payload;
+    state.isOfferLoading = false;
   });
   builder.addCase(loadOffersNearby, (state, action) => {
     state.offersNearby = action.payload;

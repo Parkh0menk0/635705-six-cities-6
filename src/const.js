@@ -6,6 +6,7 @@ export const RATINIG_INIT = 0;
 export const REVIEW_LENGTH_MIN = 50;
 export const REVIEW_LENGTH_MAX = 300;
 export const VISIBLE_OFFERS_NEARBY_COUNT = 3;
+export const VISIBLE_REVIEW_COUNT = 10;
 
 
 export const SortTypes = {
@@ -49,6 +50,11 @@ export const CitiesMap = {
   Dusseldorf: [51.2387, 6.8143]
 };
 
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};
+
 export const AppRoute = {
   LOGIN: `/login`,
   MAIN: `/`,
@@ -69,38 +75,38 @@ export const APIRoute = {
 };
 
 export const EMPTY_OFFER = {
+  "bedrooms": 0,
   "city": {
-    "name": `Paris`,
     "location": {
       "latitude": 0,
       "longitude": 0,
       "zoom": 0
-    }
-  },
-  "preview_image": ``,
-  "images": [],
-  "title": ``,
-  "is_favorite": false,
-  "is_premium": false,
-  "rating": 0,
-  "type": `room`,
-  "bedrooms": 0,
-  "max_adults": 0,
-  "price": 0,
-  "goods": [],
-  "host": {
-    "id": 0,
-    "name": ``,
-    "is_pro": false,
-    "avatar_url": ``
+    },
+    "name": `Paris`
   },
   "description": ``,
+  "goods": [],
+  "host": {
+    "avatar_url": ``,
+    "id": 0,
+    "is_pro": false,
+    "name": ``
+  },
+  "id": 0,
+  "images": [],
+  "is_favorite": false,
+  "is_premium": false,
   "location": {
     "latitude": 0,
     "longitude": 0,
     "zoom": 0
   },
-  "id": 0
+  "max_adults": 0,
+  "preview_image": ``,
+  "price": 0,
+  "rating": 0,
+  "title": ``,
+  "type": `room`
 };
 
 export const EMPTY_USER = {
@@ -109,4 +115,17 @@ export const EMPTY_USER = {
   "id": 1,
   "is_pro": false,
   "name": ``
+};
+
+export const REVIEW = {
+  "comment": `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+  "date": `2019-05-08T14:13:56.569Z`,
+  "id": 1,
+  "rating": 4,
+  "user": {
+    "avatar_url": `img/1.png`,
+    "id": 4,
+    "is_pro": false,
+    "name": `Max`
+  }
 };

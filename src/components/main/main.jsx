@@ -1,11 +1,11 @@
 import React from "react";
-import LocationList from "src/components/location-list/location-list";
-import PlaceSort from "src/components/places-sort/places-sort";
-import PlaceList from "src/components/place-list/place-list";
-import {CITIES, MapType, PlaceListType} from "src/const";
-import Map from "src/components/map/map";
+import LocationList from "../location-list/location-list";
+import PlaceSort from "../places-sort/places-sort";
+import PlaceList from "../place-list/place-list";
+import {CITIES, MapType, PlaceListType} from "../../const";
+import Map from "../map/map";
 import PropTypes from "prop-types";
-import {propTypesPlace} from "src/utils/place";
+import {propTypesPlace} from "../../utils/place";
 
 const Main = ({offers, locationCity, sortTypes, locations}) => {
   return (

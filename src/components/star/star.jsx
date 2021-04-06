@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {getArrayFromOneToN} from "src/utils/common";
-import {MAX_RATING, RatingMap} from "src/const";
+import {getArrayFromOneToN} from "../../utils/common";
+import {MAX_RATING, RatingMap} from "../../const";
 
 const Star = ({rating, onRatingChange, readonly}) => {
 

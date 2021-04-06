@@ -2,8 +2,8 @@ import React, {useEffect} from "react";
 
 import {useDispatch, useSelector} from "react-redux";
 
-import FavoritesPage from "src/components/pages/favorites-page/favorites-page";
-import {fetchFavorite} from "src/store/api-actions";
+import FavoritesPage from "../favorites-page/favorites-page";
+import {fetchFavorite} from "../../../store/api-actions";
 
 
 const FavoritesPageWrapper = () => {

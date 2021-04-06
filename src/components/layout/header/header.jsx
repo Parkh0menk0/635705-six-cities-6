@@ -1,9 +1,8 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
-import {AppRoute} from "src/const";
-import {logout} from "src/store/api-actions";
-import {AuthorizationStatus} from "src/api";
+import {AuthorizationStatus, AppRoute} from "../../../const";
+import {logout} from "../../../store/api-actions";
 
 const logoutStyle = {
   marginLeft: `15px`
