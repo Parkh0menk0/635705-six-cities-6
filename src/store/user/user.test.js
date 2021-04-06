@@ -1,9 +1,9 @@
-import MockAdapter from 'axios-mock-adapter';
-import {createAPI} from '../../api';
+import MockAdapter from "axios-mock-adapter";
+import {createAPI} from "../../api";
 import {user} from "./user";
-import {APIRoute, AppRoute, AuthorizationStatus, EMPTY_USER} from "src/const";
-import {ActionType, setUser} from "src/store/action";
-import {checkAuth, login, logout} from '../api-actions';
+import {APIRoute, AppRoute, AuthorizationStatus, EMPTY_USER} from "../../const";
+import {ActionType, setUser} from "../action";
+import {checkAuth, login, logout} from "../api-actions";
 
 const api = createAPI(() => {});
 

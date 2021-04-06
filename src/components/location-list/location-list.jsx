@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {useDispatch, useSelector} from "react-redux";
-import {changeLocation, changeSortType} from "src/store/action";
-import LocationItem from "src/components/location-item/location-item";
-import {SortTypes} from "src/const";
+import {changeLocation, changeSortType} from "../../store/action";
+import LocationItem from "../location-item/location-item";
+import {SortTypes} from "../../const";
 
 
 const LocationList = ({locations}) => {

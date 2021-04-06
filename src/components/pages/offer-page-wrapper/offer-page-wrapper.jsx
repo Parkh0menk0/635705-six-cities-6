@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
-import OfferPage from "src/components/pages/offer-page/offer-page";
-import {fetchComments, fetchOffer, fetchNearOffers} from "src/store/api-actions";
+import OfferPage from "../offer-page/offer-page";
+import {fetchComments, fetchOffer, fetchNearOffers} from "../../../store/api-actions";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
-import {getCommentsVisible, getOffersNearbyVisible} from "src/store/data/selectors";
+import {getCommentsVisible, getOffersNearbyVisible} from "../../../store/data/selectors";
 
 const OfferPageWrapper = () => {
   const {id} = useParams();

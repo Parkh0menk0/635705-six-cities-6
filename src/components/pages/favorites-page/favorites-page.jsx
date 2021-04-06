@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {propTypesPlace} from "src/utils/place";
-import withSpinner from "src/hocs/with-spinner/with-spinner";
-import Favorites from "src/components/favorites/favorites";
-import FavoritesEmpty from "src/components/favorites-empty/favorites-empty";
+import {propTypesPlace} from "../../../utils/place";
+import withSpinner from "../../../hocs/with-spinner/with-spinner";
+import Favorites from "../../favorites/favorites";
+import FavoritesEmpty from "../../favorites-empty/favorites-empty";
 
 const FavoritesPage = ({offers}) => {
 

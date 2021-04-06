@@ -1,11 +1,11 @@
 import React from "react";
-import {render, screen} from '@testing-library/react';
+import {render, screen} from "@testing-library/react";
 import {Router} from "react-router-dom";
-import {createMemoryHistory} from 'history';
+import {createMemoryHistory} from "history";
 import * as redux from "react-redux";
-import configureStore from 'redux-mock-store';
-import {AuthorizationStatus, EMPTY_OFFER, INITIAL_LOCATION} from '../../const';
-import App from './app';
+import configureStore from "redux-mock-store";
+import {AuthorizationStatus, EMPTY_OFFER, INITIAL_LOCATION} from "../../const";
+import App from "./app";
 import {createAPI} from "../../api";
 import thunk from "redux-thunk";
 
@@ -30,7 +30,7 @@ describe(`Test routing`, () => {
       },
       APP: {locationCity: INITIAL_LOCATION},
     });
-    window.mockStore = store;
+
     const history = createMemoryHistory();
     render(
         <redux.Provider store={store}>

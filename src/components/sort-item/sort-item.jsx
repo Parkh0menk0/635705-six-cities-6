@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {SORT_TYPES} from "src/const";
+import {SORT_TYPES} from "../../const";
 
 const SortItem = ({isActive, type, onChangeSortType}) => {
   const className = isActive ?

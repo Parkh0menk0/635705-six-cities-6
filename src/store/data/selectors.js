@@ -1,9 +1,9 @@
-import {NameSpace} from "src/store/root-reducer";
+import {NameSpace} from "../root-reducer";
 import {createSelector} from "reselect";
-import {getLocationCity, getSortType} from "src/store/app/selectors";
-import {sortComments, sortOffers} from "src/utils/sort";
-import {getOffersByLocation} from "src/utils/place";
-import {VISIBLE_OFFERS_NEARBY_COUNT, VISIBLE_REVIEW_COUNT} from "src/const";
+import {getLocationCity, getSortType} from "../app/selectors";
+import {sortComments, sortOffers} from "../../utils/sort";
+import {getOffersByLocation} from "../../utils/place";
+import {VISIBLE_OFFERS_NEARBY_COUNT, VISIBLE_REVIEW_COUNT} from "../../const";
 
 export const getOffers = (state) => state[NameSpace.DATA].offers;
 export const getOfferListLoadedStatus = (state) => state[NameSpace.DATA].isOfferListLoaded;

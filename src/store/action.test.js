@@ -15,8 +15,8 @@ import {
   loadFavorite,
   setFavoriteLoading,
   ActionType
-} from './action';
-import {EMPTY_OFFER, EMPTY_USER, REVIEW} from "src/const";
+} from "./action";
+import {EMPTY_OFFER, EMPTY_USER, REVIEW} from "../const";
 
 describe(`Action creators work correctly`, () => {
   it(`Action creator for changing location returns correct action`, () => {

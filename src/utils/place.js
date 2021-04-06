@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import {CardType, CITIES, MAX_RATING, PLACE_TYPE} from "src/const";
+import {CardType, CITIES, MAX_RATING, PLACE_TYPE} from "../const";
 
 export const PLACE_SETTINGS = {
   cities: {

@@ -50,6 +50,11 @@ export const CitiesMap = {
   Dusseldorf: [51.2387, 6.8143]
 };
 
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};
+
 export const AppRoute = {
   LOGIN: `/login`,
   MAIN: `/`,

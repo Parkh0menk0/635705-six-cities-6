@@ -1,4 +1,4 @@
-import {SortTypes} from "src/const";
+import {SortTypes} from "../const";
 import dayjs from "dayjs";
 
 const SortFuncMap = {

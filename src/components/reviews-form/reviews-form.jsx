@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import Star from "src/components/star/star";
-import ReviewContent from "src/components/review-content/review-content";
-import {sendReview} from "src/store/api-actions";
-import {setErrorMessage} from "src/store/action";
-import {RATINIG_INIT, REVIEW_LENGTH_MIN, REVIEW_LENGTH_MAX} from "src/const";
-import {getOfferID} from "src/store/data/selectors";
-import {AuthorizationStatus} from "src/api";
+import Star from "../star/star";
+import ReviewContent from "../review-content/review-content";
+import {sendReview} from "../../store/api-actions";
+import {setErrorMessage} from "../../store/action";
+import {AuthorizationStatus, RATINIG_INIT, REVIEW_LENGTH_MIN, REVIEW_LENGTH_MAX} from "../../const";
+import {getOfferID} from "../../store/data/selectors";
 
 
 const ReviewsForm = () => {

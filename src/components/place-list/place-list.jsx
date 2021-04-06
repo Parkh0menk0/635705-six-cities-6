@@ -1,10 +1,10 @@
 import React from "react";
 import {useDispatch} from "react-redux";
-import Place from "src/components/place/place";
+import Place from "../place/place";
 import PropTypes from "prop-types";
-import {propTypesPlace} from "src/utils/place";
-import {PLACE_LIST_SETTINGS} from "src/utils/place";
-import {setActiveOffer} from "src/store/action";
+import {propTypesPlace} from "../../utils/place";
+import {PLACE_LIST_SETTINGS} from "../../utils/place";
+import {setActiveOffer} from "../../store/action";
 
 const PlaceList = ({offers, placeListType}) => {
   const dispatch = useDispatch();

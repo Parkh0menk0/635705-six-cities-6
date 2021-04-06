@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import LoadingScreen from "src/components/loading-screen/loading-screen";
+import LoadingScreen from "../../components/loading-screen/loading-screen";
 
 const withSpinner = (Component) => {
   const WithSpinner = ({isLoading, ...props}) => {

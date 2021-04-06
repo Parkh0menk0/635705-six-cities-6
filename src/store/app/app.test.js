@@ -1,5 +1,5 @@
 import {app} from "./app";
-import {changeSortType, setActiveOffer, setErrorMessage, unsetErrorMessage} from "src/store/action";
+import {changeSortType, setActiveOffer, setErrorMessage, unsetErrorMessage} from "../action";
 
 
 describe(`Reducers 'app' work correctly`, () => {

@@ -1,8 +1,8 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import PropTypes from "prop-types";
-import SortItem from "src/components/sort-item/sort-item";
-import {changeSortType} from "src/store/action";
+import SortItem from "../sort-item/sort-item";
+import {changeSortType} from "../../store/action";
 
 
 const SortList = ({isOpen, sortTypes}) => {

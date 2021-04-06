@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "src/components/layout/header/header";
-import Footer from "src/components/layout/footer/footer";
+import Header from "../layout/header/header";
+import Footer from "../layout/footer/footer";
 
 const FavoritesEmpty = () => {
   return (

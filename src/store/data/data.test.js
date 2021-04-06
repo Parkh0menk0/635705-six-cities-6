@@ -1,6 +1,6 @@
 import {data} from "./data";
-import {APIRoute, EMPTY_OFFER, REVIEW} from "src/const";
-import {ActionType, setFavoriteLoading, setOfferLoading} from "src/store/action";
+import {APIRoute, EMPTY_OFFER, REVIEW} from "../../const";
+import {ActionType, setFavoriteLoading, setOfferLoading} from "../action";
 import MockAdapter from "axios-mock-adapter";
 import {
   fetchComments,
@@ -111,7 +111,7 @@ describe(`Async operations work correctly`, () => {
 
     return offerLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(3);
+        expect(dispatch).toHaveBeenCalledTimes(2);
 
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.SET_OFFER_LOADIGN,
@@ -123,10 +123,6 @@ describe(`Async operations work correctly`, () => {
           payload: EMPTY_OFFER
         });
 
-        expect(dispatch).toHaveBeenNthCalledWith(3, {
-          type: ActionType.SET_OFFER_LOADIGN,
-          payload: false
-        });
       });
   });
 

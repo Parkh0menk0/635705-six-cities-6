@@ -1,9 +1,9 @@
 import React, {useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import Header from "src/components/layout/header/header";
-import {login} from "src/store/api-actions";
-import {AppRoute} from "src/const";
+import Header from "../../layout/header/header";
+import {login} from "../../../store/api-actions";
+import {AppRoute} from "../../../const";
 
 const LoginPage = () => {
   const locationCity = useSelector((state) => state.APP.locationCity);

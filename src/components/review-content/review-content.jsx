@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {REVIEW_LENGTH_MAX, REVIEW_LENGTH_MIN} from "src/const";
+import {REVIEW_LENGTH_MAX, REVIEW_LENGTH_MIN} from "../../const";
 
 const ReviewContent = ({comment, onContentChange, readonly}) => {
 
