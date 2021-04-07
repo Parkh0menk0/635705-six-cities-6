@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import {CardType, CITIES, MAX_RATING, PLACE_TYPE} from "../const";
+import {CardType, CITIES, MAX_RATING, PLACE_TYPES} from "../const";
 
 export const PLACE_SETTINGS = {
   cities: {
@@ -110,7 +110,7 @@ export const propTypesPlace = PropTypes.shape({
   "price": PropTypes.number.isRequired,
   "rating": PropTypes.number.isRequired,
   "title": PropTypes.string.isRequired,
-  "type": PropTypes.oneOf(PLACE_TYPE).isRequired
+  "type": PropTypes.oneOf(PLACE_TYPES).isRequired
 });
 
 
