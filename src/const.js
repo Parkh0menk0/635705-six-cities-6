@@ -1,5 +1,5 @@
 export const CITIES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];
-export const PLACE_TYPE = [`apartment`, `room`, `house`, `hotel`];
+export const PLACE_TYPES = [`apartment`, `room`, `house`, `hotel`];
 export const SORT_TYPES = [`Popular`, `Price: low to high`, `Price: high to low`, `Top rated first`];
 export const MAX_RATING = 5;
 export const RATINIG_INIT = 0;
