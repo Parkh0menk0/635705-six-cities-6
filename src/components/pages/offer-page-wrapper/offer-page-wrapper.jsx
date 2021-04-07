@@ -20,7 +20,7 @@ const OfferPageWrapper = () => {
 
   useEffect(() => {
     dispatch(fetchComments(id));
-  }, [id], comments);
+  }, [id]);
 
   useEffect(() => {
     dispatch(fetchNearOffers(id));

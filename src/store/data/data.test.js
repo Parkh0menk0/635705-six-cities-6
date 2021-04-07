@@ -111,7 +111,7 @@ describe(`Async operations work correctly`, () => {
 
     return offerLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenCalledTimes(3);
 
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.SET_OFFER_LOADIGN,
