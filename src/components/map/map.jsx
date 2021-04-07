@@ -2,16 +2,15 @@ import React, {useEffect, useRef} from "react";
 import leaflet from "leaflet";
 import PropTypes from "prop-types";
 import {CitiesMap} from "../../const";
-import {MAP_SETTINGS} from "../../utils/place";
+import {MAP_SETTINGS, propTypesPlace} from "../../utils/place";
 import "leaflet/dist/leaflet.css";
 import {useSelector} from "react-redux";
-import {getFilteredOffers} from "../../store/data/selectors";
 
 const zoom = 12;
 
-const Map = ({mapType}) => {
-  const {locationCity, activeOffer} = useSelector((state) => state.APP);
-  const offers = useSelector(getFilteredOffers);
+const Map = ({currentOffer, activeOffer, offers, mapType}) => {
+
+  const locationCity = useSelector((state) => state.APP.locationCity);
 
   const mapRef = useRef();
 
@@ -30,6 +29,22 @@ const Map = ({mapType}) => {
         attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
       })
       .addTo(mapRef.current);
+
+    if (currentOffer) {
+
+      leaflet.marker({
+        lat: currentOffer.location.latitude,
+        lng: currentOffer.location.longitude
+      },
+      {
+        icon: leaflet.icon({
+          iconUrl: `img/pin-active.svg`,
+          iconSize: [30, 30]
+        })
+      })
+        .addTo(mapRef.current)
+        .bindPopup(currentOffer.title);
+    }
 
     offers.forEach((offer) => {
       const customIcon = leaflet.icon({
@@ -64,6 +79,9 @@ const Map = ({mapType}) => {
 
 Map.propTypes = {
   mapType: PropTypes.string.isRequired,
+  currentOffer: propTypesPlace,
+  activeOffer: PropTypes.number,
+  offers: PropTypes.arrayOf(propTypesPlace).isRequired
 };
 
 export default Map;
